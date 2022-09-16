@@ -16,7 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::apiResource('/dokumen','DokumenController');
+Route::apiResource('/kelengkapandokumen','KelengkapanDokController');
 
 
 Route::apiResource('logsuccess', 'API\LogSuccessController');
@@ -29,6 +31,7 @@ Route::post('/upload-berkas','BerkasController@update')->name('uploadberkas');
 //list
 Route::post('list-klien','API\ListController@listKlien');
 Route::post('list-pengurusanjasa','API\ListController@listPengurusanjasa');
+Route::post('list-dokumenklien','API\ListController@listDokumenklien');
 
 //cetak PDF
 // Route::get('/cetak-kegiatan/{bulan}/{tahun}/{rt}','KegiatanLaporanController@cetakkegiatan')->name('cetak-kegiatan');

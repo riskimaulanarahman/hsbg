@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\referensi;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Model\Dokumenklien;
+use App\Model\KelengkapanDokumen;
 
-class DokumenklienController extends Controller
+class KelengkapanDokController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class DokumenklienController extends Controller
     public function index()
     {
         try {
-            $data = Dokumenklien::all();
+            $data = KelengkapanDokumen::where('deleted_status',0)->get();
 
             return response()->json(['status' => "show", "message" => "Menampilkan Data" , 'data' => $data]);
 
@@ -35,10 +35,14 @@ class DokumenklienController extends Controller
      */
     public function store(Request $request)
     {
+        $date = $request->tanggal_daftar_pengurusan;
+        $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
+        
+        $requestData = $request->all();
+        $requestData['tanggal_daftar_pengurusan'] = $fixed;
         try {
-            $requestData = $request->all();
-            ($request->status_aktif == 'false') ? $requestData['status_aktif'] = 0 : $requestData['status_aktif'] = 1;
-            Dokumenklien::create($requestData);
+
+            KelengkapanDokumen::create($requestData);
             return response()->json(["status" => "success", "message" => "Berhasil Menambahkan Data"]);
 
         } catch (\Exception $e){
@@ -55,7 +59,18 @@ class DokumenklienController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+
+            $data = KelengkapanDokumen::where('deleted_status',0)
+            ->where('id_daftar_pengurusan',$id)
+            ->get();
+
+            return response()->json(['status' => "show", "message" => "Menampilkan Data" , 'data' => $data]);
+
+        } catch (\Exception $e){
+
+            return response()->json(["status" => "error", "message" => $e->getMessage()]);
+        }
     }
 
     /**
@@ -67,14 +82,16 @@ class DokumenklienController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $date = $request->tanggal_daftar_pengurusan;
+        $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
+        
         $requestData = $request->all();
-        ($request->status_aktif == 'false') ? $requestData['status_aktif'] = 0 : $requestData['status_aktif'] = 1;
+        $requestData['tanggal_daftar_pengurusan'] = $fixed;
         try {
     
-            $data = Dokumenklien::findOrFail($id);
+            $data = KelengkapanDokumen::findOrFail($id);
             $data->update($requestData);
             $data->save();
-            // !$data->fill($requestData)->save();
 
             return response()->json(["status" => "success", "message" => "Berhasil Ubah Data"]);
 
@@ -93,8 +110,9 @@ class DokumenklienController extends Controller
     public function destroy($id)
     {
         try {
-            $data = Dokumenklien::findOrFail($id);
-            $data->delete();
+            $data = KelengkapanDokumen::findOrFail($id);
+            $data->deleted_status = 1;
+            $data->save();
             return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
 
         } catch (\Exception $e){
