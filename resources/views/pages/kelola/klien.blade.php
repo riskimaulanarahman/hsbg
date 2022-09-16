@@ -81,7 +81,15 @@ var dataGrid = $("#kelola-klien").dxDataGrid({
                 }
             ]
         },
-		'nama_badan_usaha','alamat_klien',
+		'nama_badan_usaha',
+        { 
+            dataField: "alamat_klien",
+            validationRules: [
+                { 
+                    type: "required" 
+                }
+            ]
+        },
         { 
             dataField: "nomor_identitas_klien",
             validationRules: [
