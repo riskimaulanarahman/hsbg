@@ -49,16 +49,13 @@ class BerkasController extends Controller
     public function update(Request $request)
     {
         try {
-
-            // if($file = $request->hasFile('file')) {
-                $module = "kegiatanrt";
-                $file = $request->file('myFile');
-                $nama_file = $module."_".time()."_".$file->getClientOriginalName();
-                $tujuan_upload = 'upload';
-                $file->move($tujuan_upload,$nama_file);
-            
-                return $nama_file;
-            // }
+            $module = "uploadberkas";
+            $file = $request->file('myFile');
+            $nama_file = $module."_".time()."_".$file->getClientOriginalName();
+            $tujuan_upload = 'upload';
+            $file->move($tujuan_upload,$nama_file);
+        
+            return $nama_file;
         } catch (\Exception $e){
 
             return response()->json(["status" => "error", "message" => $e->getMessage()]);

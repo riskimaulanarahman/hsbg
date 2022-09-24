@@ -82,11 +82,11 @@ class KelengkapanDokController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $date = $request->tanggal_daftar_pengurusan;
+        $date = $request->tanggal_penyerahan;
         $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
         
         $requestData = $request->all();
-        $requestData['tanggal_daftar_pengurusan'] = $fixed;
+        $requestData['tanggal_penyerahan'] = $fixed;
         try {
     
             $data = KelengkapanDokumen::findOrFail($id);

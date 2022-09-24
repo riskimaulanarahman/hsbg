@@ -254,7 +254,7 @@ const popupContentTemplate = function (daftarid,mode) {
                             wordWrapEnabled: true,
                             showBorders: true,
                             filterRow: { visible: true },
-                            filterPanel: { visible: true },
+                            filterPanel: { visible: false },
                             headerFilter: { visible: true },
                             editing: {
                                 useIcons:true,
@@ -264,7 +264,18 @@ const popupContentTemplate = function (daftarid,mode) {
                                 allowDeleting: true,
                             },
                             scrolling: {
-                                mode: "virtual"
+                                rowRenderingMode: 'virtual',
+                            },
+                            paging: {
+                                pageSize: 10,
+                            },
+                            pager: {
+                                visible: true,
+                                allowedPageSizes: [5, 10, 'all'],
+                                showPageSizeSelector: true,
+                                showInfo: true,
+                                showNavigationButtons: true,
+                                displayMode: 'compact'
                             },
                             columns: [
                                 { 
@@ -278,8 +289,26 @@ const popupContentTemplate = function (daftarid,mode) {
                                     },
                                     validationRules: [{ type: "required" }]
                                 },
+                                {
+                                    dataField: "foto_dokumen_klien",
+                                    allowFiltering: false,
+                                    allowSorting: false,
+                                    cellTemplate: cellTemplate,
+                                    editCellTemplate: editCellTemplate
+                                },
+                                { 
+                                    dataField: "keterangan_dokumen_klien",
+                                },
                                 { 
                                     dataField: "nomor_dokumen",
+                                },
+                                { 
+                                    dataField: "tanggal_penyerahan",
+                                    dataType: "date",
+                                    format: "dd/MM/yyyy",
+                                },
+                                { 
+                                    dataField: "lokasi_penyerahan_dokumen_klien",
                                 },
                             
                             ],
@@ -324,6 +353,7 @@ const popupContentTemplate = function (daftarid,mode) {
 
 };
 
+
 const popup = $('#popup').dxPopup({
     contentTemplate: popupContentTemplate,
     container: '.content',
@@ -340,19 +370,7 @@ const popup = $('#popup').dxPopup({
     onHidden: function() {
         resetGridDokumen();
     },
-    // toolbarItems: [{
-    //     widget: "dxButton",
-    //     toolbar: "top",
-    //     location: "after",
-    //     options: { 
-    //         icon: "close",
-    //         type: "danger",
-    //         text: "Close", 
-    //         onClick: function(e) { 
-    //             popup.hide();
-    //         }
-    //     }
-    // }]
+
 }).dxPopup('instance');
 
 function resetGridDokumen() {
@@ -460,6 +478,72 @@ var dataGrid = $("#dokumen").dxDataGrid({
         })
     },
 }).dxDataGrid("instance");
+
+
+//file upload
+
+function cellTemplate(container, options) {
+  let imgElement = document.createElement("img");
+  imgElement.setAttribute("src", "upload/" + options.value);
+  imgElement.setAttribute("height", "50");
+  imgElement.setAttribute("width", "70");
+  container.append(imgElement);
+}
+
+function editCellTemplate(cellElement, cellInfo) {
+  let buttonElement = document.createElement("div");
+  buttonElement.classList.add("retryButton");
+  let retryButton = $(buttonElement).dxButton({
+    text: "Retry",
+    visible: false,
+    onClick: function() {
+      // The retry UI/API is not implemented. Use a private API as shown at T611719.
+      for (var i = 0; i < fileUploader._files.length; i++) {
+        delete fileUploader._files[i].uploadStarted;
+      }
+      fileUploader.upload();
+    }
+  }).dxButton("instance");
+
+  $path = "";
+  $adafile = "";
+  let fileUploaderElement = document.createElement("div");
+  let fileUploader = $(fileUploaderElement).dxFileUploader({
+    multiple: false,
+    accept: "image/*",
+    uploadMode: "instantly",
+    name: "myFile",
+    uploadUrl: apiurl + "/upload-berkas",
+    onValueChanged: function(e) {
+      let reader = new FileReader();
+      reader.onload = function(args) {
+        imageElement.setAttribute('src', args.target.result);
+      }
+      reader.readAsDataURL(e.value[0]); // convert to base64 string
+    },
+    onUploaded: function(e){
+        $path = e.request.response;
+        $adafile = false;
+        cellInfo.setValue(e.request.responseText);
+        retryButton.option("visible", false);
+    },
+    onUploadError: function(e){
+        $path = "";
+        DevExpress.ui.notify(e.request.response,"error");
+    }
+  }).dxFileUploader("instance");
+
+  let imageElement = document.createElement("img");
+  imageElement.classList.add("uploadedImage");
+  imageElement.setAttribute('src', "upload/" +cellInfo.value);
+  imageElement.setAttribute('height', "50");
+
+  cellElement.append(imageElement);
+  cellElement.append(fileUploaderElement);
+  cellElement.append(buttonElement);
+
+}
+
 </script>
 
 @endpush
