@@ -35,11 +35,11 @@ class KelengkapanDokController extends Controller
      */
     public function store(Request $request)
     {
-        $date = $request->tanggal_daftar_pengurusan;
+        $date = $request->tanggal_penyerahan;
         $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
         
         $requestData = $request->all();
-        $requestData['tanggal_daftar_pengurusan'] = $fixed;
+        $requestData['tanggal_penyerahan'] = $fixed;
         try {
 
             KelengkapanDokumen::create($requestData);

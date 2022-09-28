@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('/dokumen','DokumenController');
 Route::apiResource('/kelengkapandokumen','KelengkapanDokController');
+Route::apiResource('/riwayatproses','RiwayatProsesController');
 
 
 Route::apiResource('logsuccess', 'API\LogSuccessController');

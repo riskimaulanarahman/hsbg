@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/clear-cache', function () {
+    $exitCode = Artisan::call('cache:clear');
+    $exitCode = Artisan::call('config:clear');
+    return 'DONE'; //Return anything
+});
+
 Route::group( ['as' => 'menu.','middleware' => ['auth']], function() {
 
     Route::get('/', 'HomeController@index')->name('index');

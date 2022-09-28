@@ -21,12 +21,7 @@ return [
         ],
         [
             'icon' => 'fa fa-file',
-            'title' => 'Dokumen',
-            'url' => '/dokumen',
-            'route-name' => 'menu.dokumen'
-        ],[
-            'icon' => 'fa fa-cog',
-            'title' => 'Kelola Sistem',
+            'title' => 'Master Data',
             'url' => 'javascript:;',
             'caret' => true,
             'sub_menu' => [
@@ -36,9 +31,25 @@ return [
                     'route-name' => 'menu.kelola.klien'
                 ],
                 [
-                    'url' => '/kelola/user',
-                    'title' => 'User',
-                    'route-name' => 'menu.kelola.user'
+                    'url' => '/dokumen',
+                    'title' => 'Dokumen',
+                    'route-name' => 'menu.dokumen'
+                ]]
+        ],[
+            'icon' => 'fa fa-cog',
+            'title' => 'Kelola Sistem',
+            'url' => 'javascript:;',
+            'caret' => true,
+            'sub_menu' => [
+                [
+                    'url' => '#',
+                    'title' => 'Data Pemakai',
+                    'route-name' => ''
+                ],
+                [
+                    'url' => '#',
+                    'title' => 'Inisialisasi Kantor',
+                    'route-name' => '#'
                 ]]
         ],[
             'icon' => 'fa fa-list',

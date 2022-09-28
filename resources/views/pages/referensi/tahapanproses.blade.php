@@ -56,15 +56,15 @@ var dataGrid = $("#ref-tahapanproses").dxDataGrid({
     // columnMinWidth: 80,
     wordWrapEnabled: true,
     showBorders: true,
-    filterRow: { visible: true },
-    filterPanel: { visible: true },
+    filterRow: { visible: false },
+    filterPanel: { visible: false },
     headerFilter: { visible: true },
     editing: {
         useIcons:true,
         mode: "batch",
         allowAdding: true,
         allowUpdating: true,
-        allowDeleting: true,
+        allowDeleting: false,
     },
     scrolling: {
         mode: "virtual"
@@ -74,6 +74,12 @@ var dataGrid = $("#ref-tahapanproses").dxDataGrid({
             dataField: "id_ref_pengurusan_jasa",
 			caption: "Pengurusan Jasa",
             sortOrder: "asc",
+            lookup: {
+                dataSource: listPengurusanjasa,
+                valueExpr: 'id',
+                displayExpr: 'nama_pengurusan',
+                searchEnabled: false,
+            },
             validationRules: [
                 { 
                     type: "required" 

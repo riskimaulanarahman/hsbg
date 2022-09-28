@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Dokumen')
+@section('title', 'Dokumen Klien')
 
 @push('css')
 <style>
@@ -14,7 +14,7 @@
 	<!-- begin panel -->
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<h4 class="panel-title">Dokumen</h4>
+			<h4 class="panel-title">Dokumen Klien</h4>
 			<div class="panel-heading-btn">
 				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
@@ -74,31 +74,15 @@ const accordionItems = [
 ];
 
 const popupContentTemplate = function (daftarid,mode) {
-
         maindata = {};
 
-        $.getJSON(apiurl + "/dokumen/"+daftarid,function(response) {
-            $.each(response,function(x,y){
-                maindata[x] = y
+        if(daftarid !== undefined) {
+            $.getJSON(apiurl + "/dokumen/"+daftarid,function(response) {
+                $.each(response,function(x,y){
+                    maindata[x] = y
+                })
             })
-        })
-
-        var store1 = new DevExpress.data.CustomStore({
-            key: "id",
-            load: function() {
-                return sendRequest(apiurl + "/kelengkapandokumen/"+daftarid);
-            },
-            insert: function(values) {
-                values.id_daftar_pengurusan = daftarid;
-                return sendRequest(apiurl + "/kelengkapandokumen", "POST", values);
-            },
-            update: function(key, values) {
-                return sendRequest(apiurl + "/kelengkapandokumen/"+key, "PUT", values);
-            },
-            remove: function(key) {
-                return sendRequest(apiurl + "/kelengkapandokumen/"+key, "DELETE");
-            },
-        });
+        }
 
         const scrollView = $('<div />');
 
@@ -136,7 +120,7 @@ const popupContentTemplate = function (daftarid,mode) {
                             dataSource: listPengurusanjasa,
                             valueExpr: 'id',
                             displayExpr: 'nama_pengurusan',
-                            searchEnabled: true
+                            searchEnabled: false,
                         },
                         validationRules: [{type: 'required'}],
                     },
@@ -157,10 +141,32 @@ const popupContentTemplate = function (daftarid,mode) {
                         label: {text: 'Tanggal pengurusan'},
                         editorType: 'dxDateBox',
                         editorOptions: {
-                            displayFormat: "dd/MM/yyyy"
+                            displayFormat: "dd-MM-yyyy"
                         },
                         validationRules: [{type: 'required'}],
                     },
+                    {
+                        dataField: 'total_biaya_daftar_pengurusan',
+                        label: {text: 'Total Biaya'},
+                        editorType: 'dxNumberBox',
+                        editorOptions: {
+                            format: 'Rp #,##0.##',
+                        },
+                        validationRules: [{type: 'required'}],
+
+                    }, 
+                    {
+                        dataField: 'status_lunas',
+                        label: {text: 'Status Lunas'},
+                        editorType: 'dxSelectBox',
+                        editorOptions: {
+                            dataSource: [{id:0,value:'Lunas'},{id:1,value:'Belum Lunas'}],
+                            valueExpr: 'id',
+                            displayExpr: 'value',
+                            searchEnabled: false
+                        },
+                        validationRules: [{type: 'required'}],
+                    }, 
                     {
                         dataField: 'keterangan_daftar_pengurusan',
                         label: {text: 'Keterangan'},
@@ -192,14 +198,15 @@ const popupContentTemplate = function (daftarid,mode) {
                                 
                                 // console.log(apiurl + "/dokumen/"+daftarid, "PUT", values)
                                 sendRequest(apiurl + "/dokumen/"+daftarid, "PUT", values);
-                                popup.hide()
+                                
+                                popup.hide();
+                                dataGrid.refresh();
                             },
                             useSubmitBehavior: true,
                         },
                     },{
                         itemType: 'button',
                         horizontalAlignment: 'left',
-                        // visible: true,
                         visible: (mode=='edit') ?false:true,
                         buttonOptions: {
                             text: 'Save',
@@ -211,10 +218,22 @@ const popupContentTemplate = function (daftarid,mode) {
                                 delete values.created_at
                                 delete values.updated_at
                                 delete values.deleted_status
-                                
-                                sendRequest(apiurl + "/dokumen", "POST", values);
 
-                                popup.hide()
+                                var result = dxFormInstance.validate();
+                                if(result.isValid) {
+                                    sendRequest(apiurl + "/dokumen", "POST", values).then(function(response){
+                                        dataGrid.refresh();
+                                        
+                                        setTimeout(() => {
+                                            if(response.status !== 'error') {
+                                                $('#btndaftarid'+response.data.id).trigger('click')
+                                            }
+                                        }, 5000);
+                                    });
+                                } else {
+                                    DevExpress.ui.dialog.alert("Your form is not complete or has invalid value, please recheck before submit","Error");
+                                }
+
                             },
                             useSubmitBehavior: true,
                         },
@@ -226,122 +245,144 @@ const popupContentTemplate = function (daftarid,mode) {
                             type: 'danger',
                             onClick: function(e) {
                                 popup.hide()
+                                // dataGrid.refresh();
                             },
                             useSubmitBehavior: true,
+                            
                         },
                     }],
                 }],
                 
             }),
             $("<hr>"),
-            $("<div>").dxAccordion({
-                dataSource: accordionItems,
-                animationDuration: 600,
-                selectedItems: [accordionItems[0],accordionItems[1],accordionItems[2]],
-                collapsible: true,
-                multiple: true,
-                itemTitleTemplate: function (data) {
-                    return '<small style="margin-bottom:10px !important ;">'+data.Title+'</small>'
-                },
-                itemTemplate: function (data) {
-                    
-                    if(data.ID == 1) {             
-                        return $("<div id='grid-kelengkapandokumen'>").dxDataGrid({    
-                            dataSource: store1,
-                            allowColumnReordering: true,
-                            allowColumnResizing: true,
-                            columnsAutoWidth: true,
-                            wordWrapEnabled: true,
-                            showBorders: true,
-                            filterRow: { visible: true },
-                            filterPanel: { visible: false },
-                            headerFilter: { visible: true },
-                            editing: {
-                                useIcons:true,
-                                mode: "popup",
-                                allowAdding: true,
-                                allowUpdating: true,
-                                allowDeleting: true,
-                            },
-                            scrolling: {
-                                rowRenderingMode: 'virtual',
-                            },
-                            paging: {
-                                pageSize: 10,
-                            },
-                            pager: {
-                                visible: true,
-                                allowedPageSizes: [5, 10, 'all'],
-                                showPageSizeSelector: true,
-                                showInfo: true,
-                                showNavigationButtons: true,
-                                displayMode: 'compact'
-                            },
-                            columns: [
-                                { 
-                                    caption: "Jenis Dokumen",
-                                    dataField: "id_ref_dokumen_klien",
-                                    editorType: "dxSelectBox",
-                                    lookup: {
-                                        dataSource: listDokumenklien,  
-                                        valueExpr: 'id',
-                                        displayExpr: 'nama_dokumen_klien',
-                                    },
-                                    validationRules: [{ type: "required" }]
-                                },
-                                {
-                                    dataField: "foto_dokumen_klien",
-                                    allowFiltering: false,
-                                    allowSorting: false,
-                                    cellTemplate: cellTemplate,
-                                    editCellTemplate: editCellTemplate
-                                },
-                                { 
-                                    dataField: "keterangan_dokumen_klien",
-                                },
-                                { 
-                                    dataField: "nomor_dokumen",
-                                },
-                                { 
-                                    dataField: "tanggal_penyerahan",
-                                    dataType: "date",
-                                    format: "dd/MM/yyyy",
-                                },
-                                { 
-                                    dataField: "lokasi_penyerahan_dokumen_klien",
-                                },
-                            
-                            ],
-                            onInitialized: function(e) {
-                                dxGridInstance = e.component;
-                            },
-                            onContentReady: function(e){
-                                moveEditColumnToLeft(e.component);
-                            },
-                            onToolbarPreparing: function(e) {
-                                dataGrid = e.component;
-
-                                e.toolbarOptions.items.unshift({						
-                                    location: "after",
-                                    widget: "dxButton",
-                                    options: {
-                                        hint: "Refresh Data",
-                                        icon: "refresh",
-                                        onClick: function() {
-                                            dataGrid.refresh();
-                                        }
-                                    }
-                                })
-                            },
-                        })
-                    } else if(data.ID == 2) {
-                       
-                    } else if(data.ID == 3) {
-                      
-                    }
-                }
-            })
+            
         );
+        if(daftarid !== undefined) {
+            scrollView.append(
+                $("<div>").dxAccordion({
+                    dataSource: accordionItems,
+                    animationDuration: 600,
+                    selectedItems: [accordionItems[0],accordionItems[1],accordionItems[2]],
+                    collapsible: true,
+                    multiple: true,
+                    itemTitleTemplate: function (data) {
+                        return '<small style="margin-bottom:10px !important ;">'+data.Title+'</small>'
+                    },
+                    itemTemplate: function (data) {
+                        
+                        if(data.ID == 1) {      
+                            var store1 = new DevExpress.data.CustomStore({
+                            // key: "id",
+                                load: function() {
+                                    return sendRequest(apiurl + "/kelengkapandokumen/"+daftarid);
+                                },
+                                insert: function(values) {
+                                    values.id_daftar_pengurusan = daftarid;
+                                    return sendRequest(apiurl + "/kelengkapandokumen", "POST", values);
+                                },
+                                update: function(key, values) {
+                                    return sendRequest(apiurl + "/kelengkapandokumen/"+key, "PUT", values);
+                                },
+                                remove: function(key) {
+                                    return sendRequest(apiurl + "/kelengkapandokumen/"+key, "DELETE");
+                                },
+                            });       
+                            return $("<div id='grid-kelengkapandokumen'>").dxDataGrid({    
+                                dataSource: store1,
+                                allowColumnReordering: true,
+                                allowColumnResizing: true,
+                                columnsAutoWidth: true,
+                                wordWrapEnabled: true,
+                                showBorders: true,
+                                filterRow: { visible: true },
+                                filterPanel: { visible: false },
+                                headerFilter: { visible: true },
+                                editing: {
+                                    useIcons:true,
+                                    mode: "popup",
+                                    allowAdding: true,
+                                    allowUpdating: true,
+                                    allowDeleting: true,
+                                },
+                                scrolling: {
+                                    rowRenderingMode: 'virtual',
+                                },
+                                paging: {
+                                    pageSize: 10,
+                                },
+                                pager: {
+                                    visible: true,
+                                    allowedPageSizes: [5, 10, 'all'],
+                                    showPageSizeSelector: true,
+                                    showInfo: true,
+                                    showNavigationButtons: true,
+                                    displayMode: 'compact'
+                                },
+                                columns: [
+                                    { 
+                                        caption: "Jenis Dokumen",
+                                        dataField: "id_ref_dokumen_klien",
+                                        editorType: "dxSelectBox",
+                                        lookup: {
+                                            dataSource: listDokumenklien,  
+                                            valueExpr: 'id',
+                                            displayExpr: 'nama_dokumen_klien',
+                                        },
+                                        validationRules: [{ type: "required" }]
+                                    },
+                                    {
+                                        dataField: "foto_dokumen_klien",
+                                        allowFiltering: false,
+                                        allowSorting: false,
+                                        cellTemplate: cellTemplate,
+                                        editCellTemplate: editCellTemplate,
+                                    },
+                                    { 
+                                        dataField: "keterangan_dokumen_klien",
+                                    },
+                                    { 
+                                        dataField: "nomor_dokumen",
+                                    },
+                                    { 
+                                        dataField: "tanggal_penyerahan",
+                                        dataType: "date",
+                                        format: "dd-MM-yyyy",
+                                    },
+                                    { 
+                                        dataField: "lokasi_penyerahan_dokumen_klien",
+                                    },
+                                
+                                ],
+                                onInitialized: function(e) {
+                                    dxGridInstance = e.component;
+                                },
+                                onContentReady: function(e){
+                                    moveEditColumnToLeft(e.component);
+                                },
+                                onToolbarPreparing: function(e) {
+                                    e.toolbarOptions.items.unshift({						
+                                        location: "after",
+                                        widget: "dxButton",
+                                        options: {
+                                            hint: "Refresh Data",
+                                            icon: "refresh",
+                                            onClick: function() {
+                                                dxGridInstance.refresh();
+                                            }
+                                        }
+                                    })
+                                },
+                            })
+                        } else if(data.ID == 2) {
+                        
+                        } else if(data.ID == 3) {
+                        
+                        }
+                    }
+                })
+            );
+        }
+
 
 
         scrollView.dxScrollView({
@@ -366,14 +407,17 @@ const popup = $('#popup').dxPopup({
     fullScreen : false,
     onShown: function() {
         dxFormInstance.option("formData",maindata);
+        dxFormInstance.itemOption("id_ref_pengurusan_jasa", "editorOptions", {disabled:(maindata.id_ref_pengurusan_jasa == null) ? false : true});
+        dxFormInstance.itemOption("id_klien", "editorOptions", {disabled:(maindata.id_klien == null) ? false : true});
     },
-    onHidden: function() {
-        resetGridDokumen();
-    },
+    // onHidden: function() {
+    //     resetGridDokumen();
+    // },
 
 }).dxPopup('instance');
 
 function resetGridDokumen() {
+    console.log('hide')
     dataGrid.refresh();
 }
 
@@ -402,7 +446,7 @@ var dataGrid = $("#dokumen").dxDataGrid({
             caption: 'Action',
             cellTemplate: function(container, options) {
     
-                $('<button class="btn btn-info btn-xs">Edit</button>').addClass('dx-button').on('dxclick', function(evt) {
+                $('<button class="btn btn-info btn-xs" id="btndaftarid'+options.data.id+'">Edit</button>').addClass('dx-button').on('dxclick', function(evt) {
                     evt.stopPropagation();
                         var daftarid = options.data.id
                         var mode = 'edit'
@@ -419,19 +463,40 @@ var dataGrid = $("#dokumen").dxDataGrid({
             caption: "Klien"
         },
         { 
+            dataField: "pengurusanjasa.nama_pengurusan",
+            caption: "Jenis Jasa"
+        },
+        { 
             dataField: "tanggal_daftar_pengurusan",
-            caption: "Tanggal Pengurusan"
-        },
-        { 
-            dataField: "createdby.nama_lengkap",
-            caption: "Created By"
-        },
-        { 
-            dataField: "created_at",
-            caption: "Created Date",
+            caption: "Tanggal Daftar",
             dataType: "date",
-            format: "dd/MM/yyyy HH:mm:ss",
+            format: "dd-MM-yyyy",
         },
+        { 
+            dataField: "total_biaya_daftar_pengurusan",
+            caption: "Total Biaya",
+            format: {
+                type: "fixedPoint",
+            }
+        },
+        {
+            dataField: 'status_lunas',
+            encodeHtml: false,
+            customizeText: function (e) {
+                var arrText = ["<span class='btn btn-success btn-xs'>Lunas</span>","<span class='btn btn-danger btn-xs'>Belum Lunas</span>"];
+                return arrText[e.value];
+            }
+        }, 
+        // { 
+        //     dataField: "createdby.nama_lengkap",
+        //     caption: "Created By"
+        // },
+        // { 
+        //     dataField: "created_at",
+        //     caption: "Created Date",
+        //     dataType: "date",
+        //     format: "dd-MM-yyyy HH:mm:ss",
+        // },
        
     ],
     export: {
@@ -487,7 +552,8 @@ function cellTemplate(container, options) {
   imgElement.setAttribute("src", "upload/" + options.value);
   imgElement.setAttribute("height", "50");
   imgElement.setAttribute("width", "70");
-  container.append(imgElement);
+  container.append('<a href="upload/'+options.value+'" target="_blank"><img src="upload/'+options.value+'" height="50" width="70"></a>');
+//   container.append('<a href="upload/'+options.value+'" target="_blank">'+imgElement+'</a>');
 }
 
 function editCellTemplate(cellElement, cellInfo) {

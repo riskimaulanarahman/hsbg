@@ -56,15 +56,15 @@ var dataGrid = $("#ref-dokumenklien").dxDataGrid({
     // columnMinWidth: 80,
     wordWrapEnabled: true,
     showBorders: true,
-    filterRow: { visible: true },
-    filterPanel: { visible: true },
+    filterRow: { visible: false },
+    filterPanel: { visible: false },
     headerFilter: { visible: true },
     editing: {
         useIcons:true,
         mode: "batch",
         allowAdding: true,
         allowUpdating: true,
-        allowDeleting: true,
+        allowDeleting: false,
     },
     scrolling: {
         mode: "virtual"
