@@ -59,7 +59,7 @@ class DokumenController extends Controller
                     }
                 }
             } else {
-                return response()->json(["status" => "error", "message" => "No Data Referensi", "data" => null]);
+                return response()->json(["status" => "error", "message" => "Tahapan Proses Tidak DiTemukan Untuk Jenis Jasa Tersebut", "data" => null]);
             }
             return response()->json(["status" => "success", "message" => "Berhasil Menambahkan Data", "data" => $daftar]);
 

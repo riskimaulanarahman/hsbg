@@ -168,6 +168,18 @@ const popupContentTemplate = function (daftarid,mode) {
                         validationRules: [{type: 'required'}],
                     }, 
                     {
+                        dataField: 'status_selesai',
+                        label: {text: 'Status Selesai'},
+                        editorType: 'dxSelectBox',
+                        editorOptions: {
+                            dataSource: [{id:0,value:'Selesai'},{id:1,value:'Belum Selesai'}],
+                            valueExpr: 'id',
+                            displayExpr: 'value',
+                            searchEnabled: false
+                        },
+                        validationRules: [{type: 'required'}],
+                    }, 
+                    {
                         dataField: 'keterangan_daftar_pengurusan',
                         label: {text: 'Keterangan'},
                         colSpan: 2,
