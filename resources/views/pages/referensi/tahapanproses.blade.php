@@ -74,6 +74,9 @@ var dataGrid = $("#ref-tahapanproses").dxDataGrid({
             dataField: "id_ref_pengurusan_jasa",
 			caption: "Pengurusan Jasa",
             sortOrder: "asc",
+            editorOptions: {
+                disabled: true,
+            },
             lookup: {
                 dataSource: listPengurusanjasa,
                 valueExpr: 'id',

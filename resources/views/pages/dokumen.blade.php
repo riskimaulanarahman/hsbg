@@ -322,7 +322,7 @@ const popupContentTemplate = function (daftarid,mode) {
                                     { 
                                         caption: "Jenis Dokumen",
                                         dataField: "id_ref_dokumen_klien",
-                                        editorType: "dxSelectBox",
+                                        // editorType: "dxSelectBox",
                                         lookup: {
                                             dataSource: listDokumenklien,  
                                             valueExpr: 'id',
@@ -354,7 +354,7 @@ const popupContentTemplate = function (daftarid,mode) {
                                 
                                 ],
                                 onInitialized: function(e) {
-                                    dxGridInstance = e.component;
+                                    dxGridInstance1 = e.component;
                                 },
                                 onContentReady: function(e){
                                     moveEditColumnToLeft(e.component);
@@ -367,14 +367,92 @@ const popupContentTemplate = function (daftarid,mode) {
                                             hint: "Refresh Data",
                                             icon: "refresh",
                                             onClick: function() {
-                                                dxGridInstance.refresh();
+                                                dxGridInstance1.refresh();
                                             }
                                         }
                                     })
                                 },
                             })
                         } else if(data.ID == 2) {
-                        
+                            var store2 = new DevExpress.data.CustomStore({
+                                key: "id",
+                                load: function() {
+                                    return sendRequest(apiurl + "/riwayatproses/"+daftarid);
+                                },
+                                insert: function(values) {
+                                    values.id_daftar_pengurusan = daftarid;
+                                    return sendRequest(apiurl + "/riwayatproses", "POST", values);
+                                },
+                                update: function(key, values) {
+                                    return sendRequest(apiurl + "/riwayatproses/"+key, "PUT", values);
+                                },
+                                remove: function(key) {
+                                    return sendRequest(apiurl + "/riwayatproses/"+key, "DELETE");
+                                },
+                            });       
+                            return $("<div id='grid-riwayatproses'>").dxDataGrid({    
+                                dataSource: store2,
+                                allowColumnReordering: true,
+                                allowColumnResizing: true,
+                                columnsAutoWidth: true,
+                                wordWrapEnabled: true,
+                                showBorders: true,
+                                filterRow: { visible: true },
+                                filterPanel: { visible: false },
+                                headerFilter: { visible: true },
+                                editing: {
+                                    useIcons:true,
+                                    mode: "popup",
+                                    allowAdding: false,
+                                    allowUpdating: false,
+                                    allowDeleting: false,
+                                },
+                                scrolling: {
+                                    rowRenderingMode: 'virtual',
+                                },
+                                paging: {
+                                    pageSize: 10,
+                                },
+                                pager: {
+                                    visible: true,
+                                    allowedPageSizes: [5, 10, 'all'],
+                                    showPageSizeSelector: true,
+                                    showInfo: true,
+                                    showNavigationButtons: true,
+                                    displayMode: 'compact'
+                                },
+                                columns: [
+                                    { 
+                                        caption: "Tahapan",
+                                        dataField: "id_ref_tahapan_proses",
+                                        lookup: {
+                                            dataSource: listTahapanproses,  
+                                            valueExpr: 'id',
+                                        displayExpr: 'nama_tahapan_proses',
+                                        },
+                                        validationRules: [{ type: "required" }]
+                                    },
+                                ],
+                                onInitialized: function(e) {
+                                    dxGridInstance2 = e.component;
+                                },
+                                onContentReady: function(e){
+                                    moveEditColumnToLeft(e.component);
+                                },
+                                onToolbarPreparing: function(e) {
+                                    e.toolbarOptions.items.unshift({						
+                                        location: "after",
+                                        widget: "dxButton",
+                                        options: {
+                                            hint: "Refresh Data",
+                                            icon: "refresh",
+                                            onClick: function() {
+                                                dxGridInstance2.refresh();
+                                            }
+                                        }
+                                    })
+                                },
+                            })
                         } else if(data.ID == 3) {
                         
                         }
@@ -548,10 +626,10 @@ var dataGrid = $("#dokumen").dxDataGrid({
 //file upload
 
 function cellTemplate(container, options) {
-  let imgElement = document.createElement("img");
-  imgElement.setAttribute("src", "upload/" + options.value);
-  imgElement.setAttribute("height", "50");
-  imgElement.setAttribute("width", "70");
+//   let imgElement = document.createElement("img");
+//   imgElement.setAttribute("src", "upload/" + options.value);
+//   imgElement.setAttribute("height", "50");
+//   imgElement.setAttribute("width", "70");
   container.append('<a href="upload/'+options.value+'" target="_blank"><img src="upload/'+options.value+'" height="50" width="70"></a>');
 //   container.append('<a href="upload/'+options.value+'" target="_blank">'+imgElement+'</a>');
 }

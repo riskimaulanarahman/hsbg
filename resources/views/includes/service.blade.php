@@ -82,6 +82,17 @@
         }),
         sort: "nama_dokumen_klien"
     }
+
+    listTahapanproses = {
+        store: new DevExpress.data.CustomStore({
+            key: "id",
+            loadMode: "raw",
+            load: function() {
+                return $.post(apiurl + "/list-tahapanproses");
+            }
+        }),
+        sort: "nama_tahapan_proses"
+    }
     
     
     //log

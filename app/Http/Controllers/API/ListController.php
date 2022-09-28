@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use App\Model\Klien;
 use App\Model\Pengurusanjasa;
 use App\Model\Dokumenklien;
+use App\Model\Tahapanproses;
 
 class ListController extends Controller
 {
@@ -25,6 +26,10 @@ class ListController extends Controller
 
     public function listDokumenklien() {
         return Dokumenklien::select('id','nama_dokumen_klien')->get();
+    }
+
+    public function listTahapanproses() {
+        return Tahapanproses::select('id','nama_tahapan_proses')->get();
     }
 
 }

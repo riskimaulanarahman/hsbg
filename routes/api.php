@@ -33,6 +33,7 @@ Route::post('/upload-berkas','BerkasController@update')->name('uploadberkas');
 Route::post('list-klien','API\ListController@listKlien');
 Route::post('list-pengurusanjasa','API\ListController@listPengurusanjasa');
 Route::post('list-dokumenklien','API\ListController@listDokumenklien');
+Route::post('list-tahapanproses','API\ListController@listTahapanproses');
 
 //cetak PDF
 // Route::get('/cetak-kegiatan/{bulan}/{tahun}/{rt}','KegiatanLaporanController@cetakkegiatan')->name('cetak-kegiatan');
