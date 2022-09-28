@@ -272,7 +272,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         
                         if(data.ID == 1) {      
                             var store1 = new DevExpress.data.CustomStore({
-                            // key: "id",
+                                key: "id",
                                 load: function() {
                                     return sendRequest(apiurl + "/kelengkapandokumen/"+daftarid);
                                 },
