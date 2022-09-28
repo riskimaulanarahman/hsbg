@@ -599,6 +599,14 @@ var dataGrid = $("#dokumen").dxDataGrid({
                 var arrText = ["<span class='btn btn-success btn-xs'>Lunas</span>","<span class='btn btn-danger btn-xs'>Belum Lunas</span>"];
                 return arrText[e.value];
             }
+        },
+        {
+            dataField: 'status_selesai',
+            encodeHtml: false,
+            customizeText: function (e) {
+                var arrText = ["<span class='btn btn-success btn-xs'>Selesai</span>","<span class='btn btn-danger btn-xs'>Belum Selesai</span>"];
+                return arrText[e.value];
+            }
         }, 
         // { 
         //     dataField: "createdby.nama_lengkap",
