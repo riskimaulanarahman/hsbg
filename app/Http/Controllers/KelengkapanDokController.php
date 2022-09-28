@@ -86,7 +86,9 @@ class KelengkapanDokController extends Controller
         $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
         
         $requestData = $request->all();
-        $requestData['tanggal_penyerahan'] = $fixed;
+        if($date) {
+            $requestData['tanggal_penyerahan'] = $fixed;
+        }
         try {
     
             $data = KelengkapanDokumen::findOrFail($id);

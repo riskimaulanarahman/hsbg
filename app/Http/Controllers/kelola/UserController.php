@@ -13,7 +13,7 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $data = User::all();
+            $data = User::where('deleted_status',0)->get();
 
             return response()->json(['status' => "show", "message" => "Menampilkan Data" , 'data' => $data]);
 
@@ -80,10 +80,11 @@ class UserController extends Controller
             if($data->role == 'admin') {
                 return response()->json(["status" => "error", "message" => "Admin Tidak Bisa Dihapus"]);
             } else {
-                $data->delete();
+                $data->deleted_status = 1;
+                $data->save();
+                return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
             }
 
-            return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
 
         } catch (\Exception $e){
 

@@ -17,15 +17,7 @@ class RiwayatProsesController extends Controller
      */
     public function index()
     {
-        try {
-            $data = Riwayatproses::where('deleted_status',0)->get();
-
-            return response()->json(['status' => "show", "message" => "Menampilkan Data" , 'data' => $data]);
-
-        } catch (\Exception $e){
-
-            return response()->json(["status" => "error", "message" => $e->getMessage()]);
-        }
+        // ..
     }
 
     /**
@@ -36,36 +28,7 @@ class RiwayatProsesController extends Controller
      */
     public function store(Request $request)
     {
-        $date = $request->tgl_mulai_riwayat_proses;
-        $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
-        $date2 = $request->tgl_akhir_riwayat_proses;
-        $fixed2 = date('Y-m-d', strtotime(substr($date2,0,10)));
-        
-        $requestData = $request->all();
-        $requestData['tgl_mulai_riwayat_proses'] = $fixed;
-        $requestData['tgl_akhir_riwayat_proses'] = $fixed2;
-        try {
-            if($request->mode == 'addjasa') {
-                $getproses = Tahapanproses::where('id_ref_pengurusan_jasa',$request->jasaid)->get();
-                if(count($getproses) > 0) {
-                    foreach($getproses as $proses) {
-                        $data = new Riwayatproses;
-                        $data->id_daftar_pengurusan = $request->daftarid;
-                        $data->id_ref_tahapan_proses = $proses->id;
-                        $data->save();
-                    }
-                } else {
-                    return response()->json(["status" => "error", "message" => "No Data Referensi"]);
-                }
-            } else if($request->mode == 'newjasa') {
-                Riwayatproses::create($requestData);
-            }
-            return response()->json(["status" => "success", "message" => "Berhasil Menambahkan Data"]);
-
-        } catch (\Exception $e){
-
-            return response()->json(["status" => "error", "message" => $e->getMessage()]);
-        }
+        // ..
     }
 
     /**
@@ -99,11 +62,20 @@ class RiwayatProsesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $date = $request->tanggal_penyerahan;
+        $date = $request->tgl_mulai_riwayat_proses;
         $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
+        $date2 = $request->tgl_akhir_riwayat_proses;
+        $fixed2 = date('Y-m-d', strtotime(substr($date2,0,10)));
         
         $requestData = $request->all();
-        $requestData['tanggal_penyerahan'] = $fixed;
+        ($request->status_proses_selesai == 'false') ? $requestData['status_proses_selesai'] = 0 : $requestData['status_proses_selesai'] = 1;
+        if($date) {
+            $requestData['tgl_mulai_riwayat_proses'] = $fixed;
+        }
+        if($date2) {
+            $requestData['tgl_akhir_riwayat_proses'] = $fixed2;
+        }
+
         try {
     
             $data = Riwayatproses::findOrFail($id);
@@ -126,15 +98,6 @@ class RiwayatProsesController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $data = Riwayatproses::findOrFail($id);
-            $data->deleted_status = 1;
-            $data->save();
-            return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
-
-        } catch (\Exception $e){
-
-            return response()->json(["status" => "error", "message" => $e->getMessage()]);
-        }
+        // ..
     }
 }

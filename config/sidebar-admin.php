@@ -42,9 +42,9 @@ return [
             'caret' => true,
             'sub_menu' => [
                 [
-                    'url' => '#',
+                    'url' => '/kelola/user',
                     'title' => 'Data Pemakai',
-                    'route-name' => ''
+                    'route-name' => 'menu.kelola.user'
                 ],
                 [
                     'url' => '#',

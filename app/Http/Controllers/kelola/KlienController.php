@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Model\Klien;
+use App\Model\Daftarpengurusan;
 
 class KlienController extends Controller
 {
@@ -17,7 +18,7 @@ class KlienController extends Controller
     public function index()
     {
         try {
-            $data = Klien::all();
+            $data = Klien::where('deleted_status',0)->get();
 
             return response()->json(['status' => "show", "message" => "Menampilkan Data" , 'data' => $data]);
 
@@ -90,9 +91,16 @@ class KlienController extends Controller
     public function destroy($id)
     {
         try {
-            $data = Klien::findOrFail($id);
-            $data->delete();
-            return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
+            $cekdokumen = Daftarpengurusan::where('id_klien',$id)->where('deleted_status',0)->count();
+            if($cekdokumen > 0) {
+                return response()->json(["status" => "error", "message" => "klien tidak bisa dihapus, karena memiliki dokumen terdaftar "]);
+            } else {
+                $data = Klien::findOrFail($id);
+                $data->deleted_status = 1;
+                $data->save();
+                
+                return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
+            }
 
         } catch (\Exception $e){
 

@@ -17,19 +17,19 @@ class ListController extends Controller
 {
 
     public function listKlien() {
-        return Klien::select('id','nama_lengkap_klien')->get();
+        return Klien::select('id','nama_lengkap_klien')->where('deleted_status',0)->get();
     }
 
     public function listPengurusanjasa() {
-        return Pengurusanjasa::select('id','nama_pengurusan')->get();
+        return Pengurusanjasa::select('id','nama_pengurusan')->where('status_aktif',1)->get();
     }
 
     public function listDokumenklien() {
-        return Dokumenklien::select('id','nama_dokumen_klien')->get();
+        return Dokumenklien::select('id','nama_dokumen_klien')->where('status_aktif',1)->get();
     }
 
     public function listTahapanproses() {
-        return Tahapanproses::select('id','nama_tahapan_proses')->get();
+        return Tahapanproses::select('id','nama_tahapan_proses')->where('status_aktif',1)->get();
     }
 
 }

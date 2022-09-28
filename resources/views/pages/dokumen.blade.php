@@ -380,14 +380,14 @@ const popupContentTemplate = function (daftarid,mode) {
                                     return sendRequest(apiurl + "/riwayatproses/"+daftarid);
                                 },
                                 insert: function(values) {
-                                    values.id_daftar_pengurusan = daftarid;
-                                    return sendRequest(apiurl + "/riwayatproses", "POST", values);
+                                    // values.id_daftar_pengurusan = daftarid;
+                                    // return sendRequest(apiurl + "/riwayatproses", "POST", values);
                                 },
                                 update: function(key, values) {
                                     return sendRequest(apiurl + "/riwayatproses/"+key, "PUT", values);
                                 },
                                 remove: function(key) {
-                                    return sendRequest(apiurl + "/riwayatproses/"+key, "DELETE");
+                                    // return sendRequest(apiurl + "/riwayatproses/"+key, "DELETE");
                                 },
                             });       
                             return $("<div id='grid-riwayatproses'>").dxDataGrid({    
@@ -402,9 +402,9 @@ const popupContentTemplate = function (daftarid,mode) {
                                 headerFilter: { visible: true },
                                 editing: {
                                     useIcons:true,
-                                    mode: "popup",
+                                    mode: "batch",
                                     allowAdding: false,
-                                    allowUpdating: false,
+                                    allowUpdating: true,
                                     allowDeleting: false,
                                 },
                                 scrolling: {
@@ -431,6 +431,29 @@ const popupContentTemplate = function (daftarid,mode) {
                                         displayExpr: 'nama_tahapan_proses',
                                         },
                                         validationRules: [{ type: "required" }]
+                                    },
+                                    { 
+                                        dataField: "tgl_mulai_riwayat_proses",
+                                        caption: "Tgl Mulai",
+                                        dataType: "date",
+                                        format: "dd-MM-yyyy",
+                                    },
+                                    { 
+                                        dataField: "tgl_akhir_riwayat_proses",
+                                        caption: "Tgl Akhir",
+                                        dataType: "date",
+                                        format: "dd-MM-yyyy",
+                                    },
+                                    {
+                                        dataField: "keterangan_riwayat_proses"
+                                    },
+                                    {
+                                        dataField: 'durasi_tahapan_proses',
+                                        editorType: 'dxNumberBox',
+                                    },
+                                    { 
+                                        dataField: "status_proses_selesai",
+                                        dataType: "boolean"
                                     },
                                 ],
                                 onInitialized: function(e) {
