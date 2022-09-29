@@ -27,7 +27,23 @@ class RiwayatPembayaranController extends Controller
      */
     public function store(Request $request)
     {
-        // ..
+        $date = $request->tanggal_pembayaran;
+        $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
+        
+        $requestData = $request->all();
+        // ($request->status_cek_pembayaran == 'false') ? $requestData['status_cek_pembayaran'] = 0 : $requestData['status_cek_pembayaran'] = 1;
+        if($date) {
+            $requestData['tanggal_pembayaran'] = $fixed;
+        }
+        try {
+            Riwayatpembayaran::create($requestData);
+
+            return response()->json(["status" => "success", "message" => "Berhasil Menambahkan Data"]);
+
+        } catch (\Exception $e){
+
+            return response()->json(["status" => "error", "message" => $e->getMessage()]);
+        }
     }
 
     /**
@@ -61,18 +77,13 @@ class RiwayatPembayaranController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $date = $request->tgl_mulai_riwayat_proses;
+        $date = $request->tanggal_pembayaran;
         $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
-        $date2 = $request->tgl_akhir_riwayat_proses;
-        $fixed2 = date('Y-m-d', strtotime(substr($date2,0,10)));
         
         $requestData = $request->all();
-        ($request->status_proses_selesai == 'false') ? $requestData['status_proses_selesai'] = 0 : $requestData['status_proses_selesai'] = 1;
+        // ($request->status_cek_pembayaran == 'false') ? $requestData['status_cek_pembayaran'] = 0 : $requestData['status_cek_pembayaran'] = 1;
         if($date) {
-            $requestData['tgl_mulai_riwayat_proses'] = $fixed;
-        }
-        if($date2) {
-            $requestData['tgl_akhir_riwayat_proses'] = $fixed2;
+            $requestData['tanggal_pembayaran'] = $fixed;
         }
 
         try {

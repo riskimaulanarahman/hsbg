@@ -316,6 +316,11 @@ const popupContentTemplate = function (daftarid,mode) {
                                     allowUpdating: true,
                                     allowDeleting: true,
                                 },
+                                searchPanel: {
+                                    visible: true,
+                                    width: 240,
+                                    placeholder: 'Search...',
+                                },
                                 scrolling: {
                                     rowRenderingMode: 'virtual',
                                 },
@@ -409,7 +414,7 @@ const popupContentTemplate = function (daftarid,mode) {
                                 columnsAutoWidth: true,
                                 wordWrapEnabled: true,
                                 showBorders: true,
-                                filterRow: { visible: true },
+                                filterRow: { visible: false },
                                 filterPanel: { visible: false },
                                 headerFilter: { visible: true },
                                 editing: {
@@ -418,6 +423,11 @@ const popupContentTemplate = function (daftarid,mode) {
                                     allowAdding: false,
                                     allowUpdating: true,
                                     allowDeleting: false,
+                                },
+                                searchPanel: {
+                                    visible: true,
+                                    width: 240,
+                                    placeholder: 'Search...',
                                 },
                                 scrolling: {
                                     rowRenderingMode: 'virtual',
@@ -489,7 +499,132 @@ const popupContentTemplate = function (daftarid,mode) {
                                 },
                             })
                         } else if(data.ID == 3) {
-                        
+                            var store3 = new DevExpress.data.CustomStore({
+                                key: "id",
+                                load: function() {
+                                    return sendRequest(apiurl + "/riwayatpembayaran/"+daftarid);
+                                },
+                                insert: function(values) {
+                                    values.id_daftar_pengurusan = daftarid;
+                                    return sendRequest(apiurl + "/riwayatpembayaran", "POST", values);
+                                },
+                                update: function(key, values) {
+                                    return sendRequest(apiurl + "/riwayatpembayaran/"+key, "PUT", values);
+                                },
+                                remove: function(key) {
+                                    return sendRequest(apiurl + "/riwayatpembayaran/"+key, "DELETE");
+                                },
+                            });       
+                            return $("<div id='grid-riwayatpembayaran'>").dxDataGrid({    
+                                dataSource: store3,
+                                allowColumnReordering: true,
+                                allowColumnResizing: true,
+                                columnsAutoWidth: true,
+                                wordWrapEnabled: true,
+                                showBorders: true,
+                                filterRow: { visible: false },
+                                filterPanel: { visible: false },
+                                headerFilter: { visible: true },
+                                editing: {
+                                    useIcons:true,
+                                    mode: "popup",
+                                    allowAdding: true,
+                                    allowUpdating: true,
+                                    allowDeleting: true,
+                                },
+                                searchPanel: {
+                                    visible: true,
+                                    width: 240,
+                                    placeholder: 'Search...',
+                                },
+                                scrolling: {
+                                    rowRenderingMode: 'virtual',
+                                },
+                                paging: {
+                                    pageSize: 10,
+                                },
+                                pager: {
+                                    visible: true,
+                                    allowedPageSizes: [5, 10, 'all'],
+                                    showPageSizeSelector: true,
+                                    showInfo: true,
+                                    showNavigationButtons: true,
+                                    displayMode: 'compact'
+                                },
+                                columns: [
+                                    {
+                                        dataField: 'jumlah_pembayaran',
+                                        editorType: 'dxNumberBox',
+                                        format: 'Rp #,##0.##',
+                                        editorOptions: {
+                                            format: 'Rp #,##0.##',
+                                        },
+                                        validationRules: [{type: 'required'}],
+                                    },
+                                    { 
+                                        dataField: "tanggal_pembayaran",
+                                        caption: "Tgl Pembayaran",
+                                        dataType: "date",
+                                        format: "dd-MM-yyyy",
+                                        validationRules: [{type: 'required'}],
+                                    },
+                                    {
+                                        dataField: 'sistem_pembayaran',
+                                        // editorType: 'dxSelectBox',
+                                        lookup: {
+                                            dataSource: [{id:0,value:'Cash'},{id:1,value:'Transfer'}],
+                                            valueExpr: 'id',
+                                            displayExpr: 'value',
+                                            searchEnabled: false
+                                        },
+                                        validationRules: [{type: 'required'}],
+                                    }, 
+                                    // { 
+                                    //     dataField: "status_cek_pembayaran",
+                                    //     caption: "Status Pembayaran",
+                                    //     lookup: {
+                                    //         dataSource: [{id:0,value:'Lunas'},{id:1,value:'Belum Lunas'}],
+                                    //         valueExpr: 'id',
+                                    //         displayExpr: 'value',
+                                    //         searchEnabled: false
+                                    //     },
+                                    //     validationRules: [{type: 'required'}],
+                                    // },
+                                    { 
+                                        dataField: "keterangan_pembayaran",
+                                    },
+                                ],
+                                summary: {
+                                    totalItems: [{
+                                        column: 'jumlah_pembayaran',
+                                        summaryType: 'sum',
+                                        displayFormat: 'Total : Rp {0}',
+                                        valueFormat: {
+                                            type: 'fixedPoint',
+                                            precision: 0
+                                        },
+                                    }],
+                                },
+                                onInitialized: function(e) {
+                                    dxGridInstance2 = e.component;
+                                },
+                                onContentReady: function(e){
+                                    moveEditColumnToLeft(e.component);
+                                },
+                                onToolbarPreparing: function(e) {
+                                    e.toolbarOptions.items.unshift({						
+                                        location: "after",
+                                        widget: "dxButton",
+                                        options: {
+                                            hint: "Refresh Data",
+                                            icon: "refresh",
+                                            onClick: function() {
+                                                dxGridInstance2.refresh();
+                                            }
+                                        }
+                                    })
+                                },
+                            })
                         }
                     }
                 })
