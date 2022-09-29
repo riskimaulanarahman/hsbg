@@ -339,7 +339,6 @@ const popupContentTemplate = function (daftarid,mode) {
                                     { 
                                         caption: "Jenis Dokumen",
                                         dataField: "id_ref_dokumen_klien",
-                                        // editorType: "dxSelectBox",
                                         lookup: {
                                             dataSource: listDokumenklien,  
                                             valueExpr: 'id',
@@ -570,7 +569,6 @@ const popupContentTemplate = function (daftarid,mode) {
                                     },
                                     {
                                         dataField: 'sistem_pembayaran',
-                                        // editorType: 'dxSelectBox',
                                         lookup: {
                                             dataSource: [{id:0,value:'Cash'},{id:1,value:'Transfer'}],
                                             valueExpr: 'id',
@@ -578,18 +576,14 @@ const popupContentTemplate = function (daftarid,mode) {
                                             searchEnabled: false
                                         },
                                         validationRules: [{type: 'required'}],
-                                    }, 
-                                    // { 
-                                    //     dataField: "status_cek_pembayaran",
-                                    //     caption: "Status Pembayaran",
-                                    //     lookup: {
-                                    //         dataSource: [{id:0,value:'Lunas'},{id:1,value:'Belum Lunas'}],
-                                    //         valueExpr: 'id',
-                                    //         displayExpr: 'value',
-                                    //         searchEnabled: false
-                                    //     },
-                                    //     validationRules: [{type: 'required'}],
-                                    // },
+                                    },
+                                    {
+                                        dataField: "foto_bukti_pembayaran",
+                                        allowFiltering: false,
+                                        allowSorting: false,
+                                        cellTemplate: cellTemplate,
+                                        editCellTemplate: editCellTemplate,
+                                    },
                                     { 
                                         dataField: "keterangan_pembayaran",
                                     },
