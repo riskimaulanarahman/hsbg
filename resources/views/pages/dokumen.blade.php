@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Dokumen Klien')
+@section('title', 'Data Pengurusan')
 
 @push('css')
 <style>
@@ -14,7 +14,7 @@
 	<!-- begin panel -->
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<h4 class="panel-title">Dokumen Klien</h4>
+			<h4 class="panel-title">Data Pengurusan</h4>
 			<div class="panel-heading-btn">
 				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
@@ -199,7 +199,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         horizontalAlignment: 'left',
                         visible: (mode=='edit') ?true:false,
                         buttonOptions: {
-                            text: 'Update',
+                            text: 'Ubah Data Pengurusan',
                             type: 'default',
                             onClick: function(e) {
 
@@ -221,7 +221,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         horizontalAlignment: 'left',
                         visible: (mode=='edit') ?false:true,
                         buttonOptions: {
-                            text: 'Save',
+                            text: 'Simpan Data Pengurusan',
                             type: 'success',
                             onClick: function(e) {
 
@@ -253,7 +253,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         itemType: 'button',
                         horizontalAlignment: 'left',
                         buttonOptions: {
-                            text: 'Back',
+                            text: 'Batal',
                             type: 'danger',
                             onClick: function(e) {
                                 popup.hide()
@@ -414,7 +414,7 @@ const popupContentTemplate = function (daftarid,mode) {
                                 headerFilter: { visible: true },
                                 editing: {
                                     useIcons:true,
-                                    mode: "batch",
+                                    mode: "cell",
                                     allowAdding: false,
                                     allowUpdating: true,
                                     allowDeleting: false,
@@ -512,7 +512,7 @@ const popup = $('#popup').dxPopup({
     contentTemplate: popupContentTemplate,
     container: '.content',
     showTitle: true,
-    title: 'Dokumen Klien',
+    title: 'Pengurusan Jasa',
     visible: false,
     dragEnabled: false,
     hideOnOutsideClick: false,
@@ -549,7 +549,7 @@ var dataGrid = $("#dokumen").dxDataGrid({
         mode: "popup",
         allowAdding: false,
         allowUpdating: false,
-        allowDeleting: true,
+        allowDeleting: false,
     },
     scrolling: {
         mode: "virtual"

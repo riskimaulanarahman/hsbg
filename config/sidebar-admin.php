@@ -32,7 +32,7 @@ return [
                 ],
                 [
                     'url' => '/dokumen',
-                    'title' => 'Dokumen',
+                    'title' => 'Data Pengurusan',
                     'route-name' => 'menu.dokumen'
                 ]]
         ],[
@@ -49,6 +49,11 @@ return [
                 [
                     'url' => '#',
                     'title' => 'Inisialisasi Kantor',
+                    'route-name' => '#'
+                ],
+                [
+                    'url' => '#',
+                    'title' => 'Backup Database',
                     'route-name' => '#'
                 ]]
         ],[
@@ -88,6 +93,27 @@ return [
                     'route-name' => 'menu.referensi.uraianbayar'
                 ],
             ]
+        ],[
+            'icon' => 'fa fa-tools',
+            'title' => 'Tools',
+            'url' => 'javascript:;',
+            'caret' => true,
+            'sub_menu' => [
+                [
+                    'url' => '#',
+                    'title' => 'Keuangan Operasional',
+                    'route-name' => '#'
+                ],
+                [
+                    'url' => '#',
+                    'title' => 'Atur Notifikasi',
+                    'route-name' => '#'
+                ],
+                [
+                    'url' => '#',
+                    'title' => 'Bantuan',
+                    'route-name' => '#'
+                ]]
         ],[
             'icon' => 'fa fa-question-circle',
             'title' => 'Bantuan',

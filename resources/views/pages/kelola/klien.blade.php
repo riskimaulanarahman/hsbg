@@ -48,7 +48,7 @@ function moveEditColumnToLeft(dataGrid) {
     });
 }
 // attribute
-jenisidentitas = [{id:1,identitas:"KTP"},{id:2,identitas:"SIM A"},{id:3,identitas:"SIM C"}];
+jenisidentitas = [{id:1,identitas:"KTP"},{id:2,identitas:"SIM"},{id:3,identitas:"PASSPORT"},{id:4,identitas:"LAINNYA"}];
 
 var dataGrid = $("#kelola-klien").dxDataGrid({    
     dataSource: store,
