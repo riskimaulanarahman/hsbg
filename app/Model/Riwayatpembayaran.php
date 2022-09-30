@@ -13,4 +13,9 @@ class Riwayatpembayaran extends Model
 
     protected $table = 'riwayat_pembayaran';
 
+    public function uraianbayar()
+    {
+        return $this->belongsTo('App\Model\Uraianbayar','id_ref_uraian_bayar','id');
+    }
+
 }

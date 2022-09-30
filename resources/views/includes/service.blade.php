@@ -93,6 +93,17 @@
         }),
         sort: "nama_tahapan_proses"
     }
+
+    listUraianbayar = {
+        store: new DevExpress.data.CustomStore({
+            key: "id",
+            loadMode: "raw",
+            load: function() {
+                return $.post(apiurl + "/list-uraianbayar");
+            }
+        }),
+        sort: "nama_tahapan_proses"
+    }
     
     
     //log

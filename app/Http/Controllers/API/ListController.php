@@ -12,6 +12,7 @@ use App\Model\Klien;
 use App\Model\Pengurusanjasa;
 use App\Model\Dokumenklien;
 use App\Model\Tahapanproses;
+use App\Model\Uraianbayar;
 
 class ListController extends Controller
 {
@@ -30,6 +31,10 @@ class ListController extends Controller
 
     public function listTahapanproses() {
         return Tahapanproses::select('id','nama_tahapan_proses')->where('status_aktif',1)->get();
+    }
+
+    public function listUraianbayar() {
+        return Uraianbayar::select('id','uraian_bayar')->where('status_aktif',1)->get();
     }
 
 }

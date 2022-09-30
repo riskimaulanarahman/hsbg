@@ -56,7 +56,7 @@ class RiwayatPembayaranController extends Controller
     {
         try {
 
-            $data = Riwayatpembayaran::where('deleted_status',0)
+            $data = Riwayatpembayaran::with('uraianbayar')->where('deleted_status',0)
             ->where('id_daftar_pengurusan',$id)
             ->get();
 

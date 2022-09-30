@@ -180,6 +180,18 @@ const popupContentTemplate = function (daftarid,mode) {
                         validationRules: [{type: 'required'}],
                     }, 
                     {
+                        dataField: 'status_aktif',
+                        label: {text: 'Status Aktif'},
+                        editorType: 'dxSelectBox',
+                        editorOptions: {
+                            dataSource: [{id:0,value:'Aktif'},{id:1,value:'Tidak Aktif'}],
+                            valueExpr: 'id',
+                            displayExpr: 'value',
+                            searchEnabled: false,
+                        },
+                        validationRules: [{type: 'required'}],
+                    }, 
+                    {
                         dataField: 'keterangan_daftar_pengurusan',
                         label: {text: 'Keterangan'},
                         colSpan: 2,
@@ -199,7 +211,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         horizontalAlignment: 'left',
                         visible: (mode=='edit') ?true:false,
                         buttonOptions: {
-                            text: 'Ubah Data Pengurusan',
+                            text: 'Ubah',
                             type: 'default',
                             onClick: function(e) {
 
@@ -221,7 +233,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         horizontalAlignment: 'left',
                         visible: (mode=='edit') ?false:true,
                         buttonOptions: {
-                            text: 'Simpan Data Pengurusan',
+                            text: 'Simpan',
                             type: 'success',
                             onClick: function(e) {
 
@@ -551,6 +563,16 @@ const popupContentTemplate = function (daftarid,mode) {
                                     displayMode: 'compact'
                                 },
                                 columns: [
+                                    { 
+                                        caption: "Uraian Bayar",
+                                        dataField: "id_ref_uraian_bayar",
+                                        lookup: {
+                                            dataSource: listUraianbayar,  
+                                            valueExpr: 'id',
+                                            displayExpr: 'uraian_bayar',
+                                        },
+                                        validationRules: [{ type: "required" }]
+                                    },
                                     {
                                         dataField: 'jumlah_pembayaran',
                                         editorType: 'dxNumberBox',
@@ -576,6 +598,18 @@ const popupContentTemplate = function (daftarid,mode) {
                                             searchEnabled: false
                                         },
                                         validationRules: [{type: 'required'}],
+                                    },
+                                    {
+                                        dataField: 'uraianbayar.titipan_pajak',
+                                        editorOptions: {
+                                            disabled : true
+                                        },
+                                        lookup: {
+                                            dataSource: [{id:0,value:'Ya'},{id:1,value:'Tidak'}],
+                                            valueExpr: 'id',
+                                            displayExpr: 'value',
+                                            searchEnabled: false
+                                        },
                                     },
                                     {
                                         dataField: "foto_bukti_pembayaran",
@@ -698,6 +732,14 @@ var dataGrid = $("#dokumen").dxDataGrid({
                         popup.show();
                 }).appendTo(container);
             
+            }
+        },
+        {
+            dataField: 'status_aktif',
+            encodeHtml: false,
+            customizeText: function (e) {
+                var arrText = ["<span class='btn btn-success btn-xs'>Aktif</span>","<span class='btn btn-danger btn-xs'>Tidak Aktif</span>"];
+                return arrText[e.value];
             }
         },
         { 

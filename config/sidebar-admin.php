@@ -110,14 +110,14 @@ return [
                     'route-name' => '#'
                 ],
                 [
-                    'url' => '#',
+                    'url' => '/bantuan',
                     'title' => 'Bantuan',
-                    'route-name' => '#'
+                    'route-name' => 'menu.bantuan'
                 ]]
         ],[
-            'icon' => 'fa fa-question-circle',
-            'title' => 'Bantuan',
-            'url' => '/bantuan',
+            'icon' => 'fa fa-book',
+            'title' => 'Lihat Buku Tamu',
+            'url' => '#',
         ]
     ]
 ];
