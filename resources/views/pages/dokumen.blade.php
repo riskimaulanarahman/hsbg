@@ -601,6 +601,7 @@ const popupContentTemplate = function (daftarid,mode) {
                                     },
                                     {
                                         dataField: 'uraianbayar.titipan_pajak',
+                                        caption: 'Titipan Pajak',
                                         editorOptions: {
                                             disabled : true
                                         },

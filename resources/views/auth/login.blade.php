@@ -7,7 +7,10 @@
 	<div class="login login-with-news-feed">
 		<!-- begin news-feed -->
 		<div class="news-feed">
-			{{-- <div class="news-image" style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/9/93/Kantor_Kelurahan_Telaga_Sari%2C_Balikpapan.jpg)"></div> --}}
+			<div class="news-image" style="background-image: url(https://www.inibalikpapan.com/wp-content/uploads/2019/08/Kota-Balikpapan.jpg)"></div>
+			<div class="col-md-12 text-white">
+				{{-- <h1>title</h1> --}}
+			</div>
 			<div class="news-caption">
 				<h4 class="caption-title"><b>SIM Notaris (Sistem Informasi Manajemen Notaris)</b> Balikpapan</h4>
 				<p>
