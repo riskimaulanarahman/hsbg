@@ -62,8 +62,8 @@ var dataGrid = $("#ref-tahapanproses").dxDataGrid({
     editing: {
         useIcons:true,
         mode: "batch",
-        allowAdding: true,
-        allowUpdating: true,
+        allowAdding: (role == 'admin') ? true : false,
+        allowUpdating: (role == 'admin') ? true : false,
         allowDeleting: false,
     },
     scrolling: {
@@ -74,9 +74,9 @@ var dataGrid = $("#ref-tahapanproses").dxDataGrid({
             dataField: "id_ref_pengurusan_jasa",
 			caption: "Pengurusan Jasa",
             sortOrder: "asc",
-            editorOptions: {
-                disabled: true,
-            },
+            // editorOptions: {
+            //     disabled: false,
+            // },
             lookup: {
                 dataSource: listPengurusanjasa,
                 valueExpr: 'id',
@@ -110,7 +110,12 @@ var dataGrid = $("#ref-tahapanproses").dxDataGrid({
         },
 		{ 
 			dataField: "status_aktif",
-			dataType: "boolean"
+			dataType: "boolean",
+            encodeHtml: false,
+            customizeText: function (e) {
+                var arrText = ["<span class='btn btn-danger btn-xs'>Tidak Aktif</span>","<span class='btn btn-success btn-xs'>Aktif</span>"];
+                return arrText[e.value];
+            }
 		},
        
     ],

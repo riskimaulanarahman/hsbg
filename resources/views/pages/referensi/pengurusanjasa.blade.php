@@ -84,7 +84,12 @@ var dataGrid = $("#ref-pengurusanjasa").dxDataGrid({
         },
 		{ 
 			dataField: "status_aktif",
-			dataType: "boolean"
+			dataType: "boolean",
+            encodeHtml: false,
+            customizeText: function (e) {
+                var arrText = ["<span class='btn btn-danger btn-xs'>Tidak Aktif</span>","<span class='btn btn-success btn-xs'>Aktif</span>"];
+                return arrText[e.value];
+            }
 		},
        
     ],

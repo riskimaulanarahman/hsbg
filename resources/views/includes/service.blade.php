@@ -3,6 +3,7 @@
     apiurl = window.location.origin+'/api';
     valusername = $('#valusername').val();
     valuserid = $('#valuserid').val();
+    role = $('.roleuser').val();
     function sendRequest(url, method, data) {
         var d = $.Deferred();
     

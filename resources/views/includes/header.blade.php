@@ -80,11 +80,11 @@
 			</div>
 		</li>
 		@endisset
+		<input type="hidden" class="roleuser" value="{{Auth::user()->role}}">
 		{{-- <li class="dropdown navbar-user">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 				<span class="d-none d-md-inline">{{Auth::user()->username}} </span> <b class="fa fa-caret-down"></b>
 			</a>
-			<input type="hidden" class="roleuser" value="{{Auth::user()->role}}">
 			<div class="dropdown-menu dropdown-menu-right">
 				<a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
 				<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

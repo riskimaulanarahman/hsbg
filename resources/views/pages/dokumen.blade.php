@@ -417,7 +417,8 @@ const popupContentTemplate = function (daftarid,mode) {
                                 remove: function(key) {
                                     // return sendRequest(apiurl + "/riwayatproses/"+key, "DELETE");
                                 },
-                            });       
+                            });
+                            
                             return $("<div id='grid-riwayatproses'>").dxDataGrid({    
                                 dataSource: store2,
                                 allowColumnReordering: true,
@@ -525,7 +526,20 @@ const popupContentTemplate = function (daftarid,mode) {
                                 remove: function(key) {
                                     return sendRequest(apiurl + "/riwayatpembayaran/"+key, "DELETE");
                                 },
-                            });       
+                            });     
+                            const calculateAreaSummary = (options) => {
+                                console.log(options)
+                                if (options.name === "titipanSummary") {
+                                    if (options.summaryProcess === "start") {
+                                        options.totalValue = 0;
+                                    }
+                                    if (options.summaryProcess === "calculate") {
+                                        if (options.component.isRowSelected(options.value.id)) {
+                                            options.totalValue += calculateArea(options.value);                      
+                                        }
+                                    }
+                                }  
+                            }
                             return $("<div id='grid-riwayatpembayaran'>").dxDataGrid({    
                                 dataSource: store3,
                                 allowColumnReordering: true,
@@ -600,6 +614,7 @@ const popupContentTemplate = function (daftarid,mode) {
                                         validationRules: [{type: 'required'}],
                                     },
                                     {
+                                        name: 'titipanpajak',
                                         dataField: 'uraianbayar.titipan_pajak',
                                         caption: 'Titipan Pajak',
                                         editorOptions: {
@@ -624,15 +639,68 @@ const popupContentTemplate = function (daftarid,mode) {
                                     },
                                 ],
                                 summary: {
-                                    totalItems: [{
-                                        column: 'jumlah_pembayaran',
-                                        summaryType: 'sum',
-                                        displayFormat: 'Total : Rp {0}',
-                                        valueFormat: {
-                                            type: 'fixedPoint',
-                                            precision: 0
+                                    totalItems: [
+                                        {
+                                            name: "NoTitipan",
+                                            summaryType: 'custom',
+                                            showInColumn: "id_ref_uraian_bayar",
+                                            displayFormat: 'Total Biaya Pengurusan : Rp {0}',
+                                            valueFormat: {
+                                                type: 'fixedPoint',
+                                                precision: 0
+                                            },
                                         },
-                                    }],
+                                        {
+                                            name: "YesTitipan",
+                                            summaryType: 'custom',
+                                            showInColumn: "jumlah_pembayaran",
+                                            displayFormat: 'Total Titipan Pajak : Rp {0}',
+                                            valueFormat: {
+                                                type: 'fixedPoint',
+                                                precision: 0
+                                            },
+                                        },
+                                        {
+                                            name: "TotalTitipan",
+                                            summaryType: 'custom',
+                                            showInColumn: "tanggal_pembayaran",
+                                            displayFormat: 'Grand Total Pembayaran : Rp {0}',
+                                            valueFormat: {
+                                                type: 'fixedPoint',
+                                                precision: 0
+                                            },
+                                        },
+                                    ],
+                                    calculateCustomSummary(options) {
+                                        if (options.name === 'NoTitipan') {
+                                            if (options.summaryProcess === 'start') {
+                                                options.totalValue = 0;
+                                            }
+                                            if (options.summaryProcess === 'calculate') {
+                                                if (options.value.uraianbayar.titipan_pajak == 1) {
+                                                    options.totalValue += options.value.jumlah_pembayaran;
+                                                }
+                                            }
+                                        }
+                                        if (options.name === 'YesTitipan') {
+                                            if (options.summaryProcess === 'start') {
+                                                options.totalValue = 0;
+                                            }
+                                            if (options.summaryProcess === 'calculate') {
+                                                if (options.value.uraianbayar.titipan_pajak == 0) {
+                                                    options.totalValue += options.value.jumlah_pembayaran;
+                                                }
+                                            }
+                                        }
+                                        if (options.name === 'TotalTitipan') {
+                                            if (options.summaryProcess === 'start') {
+                                                options.totalValue = 0;
+                                            }
+                                            if (options.summaryProcess === 'calculate') {
+                                                options.totalValue += options.value.jumlah_pembayaran;
+                                            }
+                                        }
+                                    },
                                 },
                                 onInitialized: function(e) {
                                     dxGridInstance2 = e.component;
@@ -680,7 +748,7 @@ const popup = $('#popup').dxPopup({
     visible: false,
     dragEnabled: false,
     hideOnOutsideClick: false,
-    showCloseButton: false,
+    showCloseButton: true,
     fullScreen : false,
     onShown: function() {
         dxFormInstance.option("formData",maindata);
@@ -747,17 +815,17 @@ var dataGrid = $("#dokumen").dxDataGrid({
             dataField: "klien.nama_lengkap_klien",
             caption: "Klien"
         },
-        { 
+        {
             dataField: "pengurusanjasa.nama_pengurusan",
             caption: "Jenis Jasa"
         },
-        { 
+        {
             dataField: "tanggal_daftar_pengurusan",
             caption: "Tanggal Daftar",
             dataType: "date",
             format: "dd-MM-yyyy",
         },
-        { 
+        {
             dataField: "total_biaya_daftar_pengurusan",
             caption: "Total Biaya",
             format: {
@@ -780,10 +848,10 @@ var dataGrid = $("#dokumen").dxDataGrid({
                 return arrText[e.value];
             }
         }, 
-        // { 
-        //     dataField: "createdby.nama_lengkap",
-        //     caption: "Created By"
-        // },
+        { 
+            dataField: "createdby.nama_lengkap",
+            caption: "Created By"
+        },
         // { 
         //     dataField: "created_at",
         //     caption: "Created Date",

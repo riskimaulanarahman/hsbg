@@ -108,6 +108,15 @@ class RiwayatPembayaranController extends Controller
      */
     public function destroy($id)
     {
-        // ..
+        try {
+            $data = Riwayatpembayaran::findOrFail($id);
+            $data->deleted_status = 1;
+            $data->save();
+            return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
+
+        } catch (\Exception $e){
+
+            return response()->json(["status" => "error", "message" => $e->getMessage()]);
+        }
     }
 }
