@@ -155,7 +155,7 @@ const popupContentTemplate = function (daftarid,mode) {
                             displayExpr: 'value',
                             searchEnabled: true
                         },
-                        // validationRules: [{type: 'required'}],
+                        validationRules: [{type: 'required'}],
                     }, 
                     {
                         dataField: 'tanggal_daftar_pengurusan',
@@ -164,7 +164,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         editorOptions: {
                             displayFormat: "dd-MM-yyyy"
                         },
-                        // validationRules: [{type: 'required'}],
+                        validationRules: [{type: 'required'}],
                     },
                     {
                         dataField: 'total_biaya_daftar_pengurusan',
@@ -173,7 +173,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         editorOptions: {
                             format: 'Rp #,##0.##',
                         },
-                        // validationRules: [{type: 'required'}],
+                        validationRules: [{type: 'required'}],
 
                     }, 
                     {
@@ -186,7 +186,7 @@ const popupContentTemplate = function (daftarid,mode) {
                             displayExpr: 'value',
                             searchEnabled: false
                         },
-                        // validationRules: [{type: 'required'}],
+                        validationRules: [{type: 'required'}],
                     }, 
                     {
                         dataField: 'status_selesai',
@@ -198,7 +198,7 @@ const popupContentTemplate = function (daftarid,mode) {
                             displayExpr: 'value',
                             searchEnabled: false,
                         },
-                        // validationRules: [{type: 'required'}],
+                        validationRules: [{type: 'required'}],
                     }, 
                     {
                         dataField: 'status_aktif',
@@ -210,7 +210,7 @@ const popupContentTemplate = function (daftarid,mode) {
                             displayExpr: 'value',
                             searchEnabled: false,
                         },
-                        // validationRules: [{type: 'required'}],
+                        validationRules: [{type: 'required'}],
                     }, 
                     {
                         dataField: 'keterangan_daftar_pengurusan',
