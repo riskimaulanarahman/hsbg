@@ -30,7 +30,9 @@
             } else if(method !== "GET" && result.status == "error") {
                 logError(valusername, method, url, text);
             }
-            if(result.status !== "show") {
+            if(result.status == "show" || result.status == 'prompt') {
+            
+            } else {
 
                 DevExpress.ui.notify(text, type, time);
             }

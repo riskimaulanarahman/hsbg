@@ -28,4 +28,10 @@ class Daftarpengurusan extends Model
         return $this->belongsTo('App\Model\Pengurusanjasa','id_ref_pengurusan_jasa','id');
     }
 
+    public function riwayatpembayaran()
+    {
+        return $this->hasMany('App\Model\Riwayatpembayaran','id_daftar_pengurusan')->where('deleted_status', 0);
+
+    }
+
 }

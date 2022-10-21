@@ -28,11 +28,10 @@ class RiwayatPembayaranController extends Controller
     public function store(Request $request)
     {
         $date = $request->tanggal_pembayaran;
-        $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
+        $fixed = date('Y-m-d', strtotime(substr($date, 0, 10)));
         
         $requestData = $request->all();
-        // ($request->status_cek_pembayaran == 'false') ? $requestData['status_cek_pembayaran'] = 0 : $requestData['status_cek_pembayaran'] = 1;
-        if($date) {
+        if ($date) {
             $requestData['tanggal_pembayaran'] = $fixed;
         }
         try {
@@ -40,7 +39,7 @@ class RiwayatPembayaranController extends Controller
 
             return response()->json(["status" => "success", "message" => "Berhasil Menambahkan Data"]);
 
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
 
             return response()->json(["status" => "error", "message" => $e->getMessage()]);
         }
@@ -56,7 +55,7 @@ class RiwayatPembayaranController extends Controller
     {
         try {
 
-            $data = Riwayatpembayaran::with('uraianbayar')->where('deleted_status',0)
+            $data = Riwayatpembayaran::with('uraianbayar')
             ->where('id_daftar_pengurusan',$id)
             ->get();
 
@@ -110,8 +109,9 @@ class RiwayatPembayaranController extends Controller
     {
         try {
             $data = Riwayatpembayaran::findOrFail($id);
-            $data->deleted_status = 1;
-            $data->save();
+            // $data->deleted_status = 1;
+            $data->delete();
+            // $data->save();
             return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
 
         } catch (\Exception $e){

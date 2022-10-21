@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Model\Klien;
 use App\Model\Daftarpengurusan;
+use Validator;
 
 class KlienController extends Controller
 {
@@ -36,8 +37,16 @@ class KlienController extends Controller
      */
     public function store(Request $request)
     {
-        $requestData = $request->all();
         try {
+            $validator = Validator::make($request->all(), [
+                'nomor_identitas_klien' => 'required|unique:klien'
+            ]);
+            if ($validator->fails()) {
+                return response()->json(["status" => "error", "message" => $validator->errors()->first()]);
+            }
+            
+            $requestData = $request->all();
+
             Klien::create($requestData);
             return response()->json(["status" => "success", "message" => "Berhasil Menambahkan Data"]);
 
@@ -67,8 +76,15 @@ class KlienController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $requestData = $request->all();
         try {
+            $validator = Validator::make($request->all(), [
+                'nomor_identitas_klien' => 'required|unique:klien'
+            ]);
+            if ($validator->fails()) {
+                return response()->json(["status" => "error", "message" => $validator->errors()->first()]);
+            }
+
+            $requestData = $request->all();
     
             $data = Klien::findOrFail($id);
             $data->update($requestData);

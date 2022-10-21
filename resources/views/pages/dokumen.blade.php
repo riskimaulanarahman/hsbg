@@ -25,6 +25,7 @@
 		<div class="panel-body">
 			<div id="dokumen" style="height: 640px; width:100%;"></div>
             <div id="popup"></div>
+            <div id="popprompt"></div>
             
 		</div>
 	</div>
@@ -72,6 +73,26 @@ const accordionItems = [
         Title: '<i class="fa fa-file-invoice-dollar"> Riwayat Pembayaran </i>',
     },
 ];
+
+const popupContentPrompt = function (data) {
+    
+    var namaklien = data.klien.nama_lengkap_klien;
+    var jenispengurusan = data.pengurusanjasa.nama_pengurusan;
+    var tanggalinput = data.tanggal_daftar_pengurusan;
+    var statusproses = (data.status_selesai == 0) ? 'Selesai' : 'Belum Selesai';
+    var statuspembayaran = (data.status_lunas == 0) ? 'Lunas' : 'Belum Lunas';
+
+    return $('<div>').append(
+      $(`<p>Klien: <strong>${namaklien}</strong>`),
+      $(`<p>Jenis Pengurusan: <strong>${jenispengurusan}</strong></p>`),
+      $(`<p>Pernah diinput tanggal: <strong>${tanggalinput}</strong></p>`),
+      $(`<p>Status Proses: <strong>${statusproses}</strong></p>`),
+      $(`<p>Status Pembayaran: <strong>${statuspembayaran}</strong></p>`),
+      $(`<br><br>`),
+      $(`<strong>Apakah Anda Yakin Ingin Membuat "Daftar Pengurusan" Baru ?</strong>`),
+    );
+
+}
 
 const popupContentTemplate = function (daftarid,mode) {
         maindata = {};
@@ -134,7 +155,7 @@ const popupContentTemplate = function (daftarid,mode) {
                             displayExpr: 'value',
                             searchEnabled: true
                         },
-                        validationRules: [{type: 'required'}],
+                        // validationRules: [{type: 'required'}],
                     }, 
                     {
                         dataField: 'tanggal_daftar_pengurusan',
@@ -143,7 +164,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         editorOptions: {
                             displayFormat: "dd-MM-yyyy"
                         },
-                        validationRules: [{type: 'required'}],
+                        // validationRules: [{type: 'required'}],
                     },
                     {
                         dataField: 'total_biaya_daftar_pengurusan',
@@ -152,7 +173,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         editorOptions: {
                             format: 'Rp #,##0.##',
                         },
-                        validationRules: [{type: 'required'}],
+                        // validationRules: [{type: 'required'}],
 
                     }, 
                     {
@@ -165,7 +186,7 @@ const popupContentTemplate = function (daftarid,mode) {
                             displayExpr: 'value',
                             searchEnabled: false
                         },
-                        validationRules: [{type: 'required'}],
+                        // validationRules: [{type: 'required'}],
                     }, 
                     {
                         dataField: 'status_selesai',
@@ -175,9 +196,9 @@ const popupContentTemplate = function (daftarid,mode) {
                             dataSource: [{id:0,value:'Selesai'},{id:1,value:'Belum Selesai'}],
                             valueExpr: 'id',
                             displayExpr: 'value',
-                            searchEnabled: false
+                            searchEnabled: false,
                         },
-                        validationRules: [{type: 'required'}],
+                        // validationRules: [{type: 'required'}],
                     }, 
                     {
                         dataField: 'status_aktif',
@@ -189,7 +210,7 @@ const popupContentTemplate = function (daftarid,mode) {
                             displayExpr: 'value',
                             searchEnabled: false,
                         },
-                        validationRules: [{type: 'required'}],
+                        // validationRules: [{type: 'required'}],
                     }, 
                     {
                         dataField: 'keterangan_daftar_pengurusan',
@@ -237,26 +258,39 @@ const popupContentTemplate = function (daftarid,mode) {
                             type: 'success',
                             onClick: function(e) {
 
-                                var values = dxFormInstance.option("formData");
-                                values.createdby = valuserid
-                                delete values.created_at
-                                delete values.updated_at
-                                delete values.deleted_status
+                                console.log(e);
 
-                                var result = dxFormInstance.validate();
-                                if(result.isValid) {
-                                    sendRequest(apiurl + "/dokumen", "POST", values).then(function(response){
-                                        dataGrid.refresh();
-                                        
-                                        setTimeout(() => {
-                                            if(response.status !== 'error') {
-                                                $('#btndaftarid'+response.data.id).trigger('click')
-                                            }
-                                        }, 5000);
-                                    });
-                                } else {
-                                    DevExpress.ui.dialog.alert("Your form is not complete or has invalid value, please recheck before submit","Error");
-                                }
+                                // var values = dxFormInstance.option("formData");
+                                // values.createdby = valuserid
+                                // delete values.created_at
+                                // delete values.updated_at
+                                // delete values.deleted_status
+
+                                // var result = dxFormInstance.validate();
+                                // if(result.isValid) {
+                                //     sendRequest(apiurl + "/dokumen", "POST", values).then(function(response){
+                                //         if(response.status == 'prompt') {
+                                //             // alert('data sama')
+                                //             console.log('from simpan :')
+                                //             console.log(response.data)
+                                //             popprompt.option({
+                                //                 contentTemplate: () => popupContentPrompt(response.data),
+                                //             });
+                                //             popprompt.show();
+                                //         } else {
+
+                                //             dataGrid.refresh();
+                                            
+                                //             setTimeout(() => {
+                                //                 if(response.status !== 'error') {
+                                //                     $('#btndaftarid'+response.data.id).trigger('click')
+                                //                 }
+                                //             }, 5000);
+                                //         }
+                                //     });
+                                // } else {
+                                //     DevExpress.ui.dialog.alert("Your form is not complete or has invalid value, please recheck before submit","Error");
+                                // }
 
                             },
                             useSubmitBehavior: true,
@@ -431,7 +465,7 @@ const popupContentTemplate = function (daftarid,mode) {
                                 headerFilter: { visible: true },
                                 editing: {
                                     useIcons:true,
-                                    mode: "cell",
+                                    mode: "popup",
                                     allowAdding: false,
                                     allowUpdating: true,
                                     allowDeleting: false,
@@ -477,6 +511,13 @@ const popupContentTemplate = function (daftarid,mode) {
                                         caption: "Tgl Akhir",
                                         dataType: "date",
                                         format: "dd-MM-yyyy",
+                                    },
+                                    {
+                                        dataField: "file_berkas",
+                                        allowFiltering: false,
+                                        allowSorting: false,
+                                        cellTemplate: cellTemplate,
+                                        editCellTemplate: editCellTemplate,
                                     },
                                     {
                                         dataField: "keterangan_riwayat_proses"
@@ -754,10 +795,66 @@ const popup = $('#popup').dxPopup({
         dxFormInstance.option("formData",maindata);
         dxFormInstance.itemOption("id_ref_pengurusan_jasa", "editorOptions", {disabled:(maindata.id_ref_pengurusan_jasa == null) ? false : true});
         dxFormInstance.itemOption("id_klien", "editorOptions", {disabled:(maindata.id_klien == null) ? false : true});
-    },
-    // onHidden: function() {
-    //     resetGridDokumen();
-    // },
+    }
+
+}).dxPopup('instance');
+
+const popprompt = $('#popprompt').dxPopup({
+    contentTemplate: popupContentPrompt,
+    width: 500,
+    height: 350,
+    // container: '.content',
+    showTitle: true,
+    title: 'Data Duplikat',
+    visible: false,
+    dragEnabled: false,
+    hideOnOutsideClick: false,
+    showCloseButton: true,
+    fullScreen : false,
+    toolbarItems: [{
+      widget: 'dxButton',
+      toolbar: 'bottom',
+      location: 'before',
+      options: {
+        // icon: 'email',
+        text: 'Lanjut',
+        onClick() {
+            var valuespr = dxFormInstance.option("formData");
+            valuespr.mode = 'ignore';
+
+            console.log('from prompt :');
+            console.log(valuespr);
+
+            // var result = dxFormInstance.validate();
+            // if(result.isValid) {
+                sendRequest(apiurl + "/dokumen", "POST", valuespr).then(function(response){
+
+                    popprompt.hide();
+                    dataGrid.refresh();
+                        
+                    setTimeout(() => {
+                        if(response.status !== 'error') {
+                            $('#btndaftarid'+response.data.id).trigger('click')
+                        }
+                    }, 5000);
+
+                });
+            // } else {
+            //     DevExpress.ui.dialog.alert("Your form is not complete or has invalid value, please recheck before submit","Error");
+            // }
+        },
+      },
+    }, {
+      widget: 'dxButton',
+      toolbar: 'bottom',
+      location: 'after',
+      options: {
+        text: 'Batal',
+        onClick() {
+          popprompt.hide();
+        },
+      },
+    }],
 
 }).dxPopup('instance');
 
@@ -781,7 +878,7 @@ var dataGrid = $("#dokumen").dxDataGrid({
         mode: "popup",
         allowAdding: false,
         allowUpdating: false,
-        allowDeleting: false,
+        allowDeleting: (role == 'admin') ? true : false,
     },
     scrolling: {
         mode: "virtual"
@@ -828,6 +925,13 @@ var dataGrid = $("#dokumen").dxDataGrid({
         {
             dataField: "total_biaya_daftar_pengurusan",
             caption: "Total Biaya",
+            format: {
+                type: "fixedPoint",
+            }
+        },
+        {
+            dataField: "total_jumlah_yang_dibayar",
+            caption: "Total yang Sudah dibayar",
             format: {
                 type: "fixedPoint",
             }
