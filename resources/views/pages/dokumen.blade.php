@@ -258,39 +258,39 @@ const popupContentTemplate = function (daftarid,mode) {
                             type: 'success',
                             onClick: function(e) {
 
-                                console.log(e);
+                                // console.log(e);
 
-                                // var values = dxFormInstance.option("formData");
-                                // values.createdby = valuserid
-                                // delete values.created_at
-                                // delete values.updated_at
-                                // delete values.deleted_status
+                                var values = dxFormInstance.option("formData");
+                                values.createdby = valuserid
+                                delete values.created_at
+                                delete values.updated_at
+                                delete values.deleted_status
 
-                                // var result = dxFormInstance.validate();
-                                // if(result.isValid) {
-                                //     sendRequest(apiurl + "/dokumen", "POST", values).then(function(response){
-                                //         if(response.status == 'prompt') {
-                                //             // alert('data sama')
-                                //             console.log('from simpan :')
-                                //             console.log(response.data)
-                                //             popprompt.option({
-                                //                 contentTemplate: () => popupContentPrompt(response.data),
-                                //             });
-                                //             popprompt.show();
-                                //         } else {
+                                var result = dxFormInstance.validate();
+                                if(result.isValid) {
+                                    sendRequest(apiurl + "/dokumen", "POST", values).then(function(response){
+                                        if(response.status == 'prompt') {
+                                            // alert('data sama')
+                                            console.log('from simpan :')
+                                            console.log(response.data)
+                                            popprompt.option({
+                                                contentTemplate: () => popupContentPrompt(response.data),
+                                            });
+                                            popprompt.show();
+                                        } else {
 
-                                //             dataGrid.refresh();
+                                            dataGrid.refresh();
                                             
-                                //             setTimeout(() => {
-                                //                 if(response.status !== 'error') {
-                                //                     $('#btndaftarid'+response.data.id).trigger('click')
-                                //                 }
-                                //             }, 5000);
-                                //         }
-                                //     });
-                                // } else {
-                                //     DevExpress.ui.dialog.alert("Your form is not complete or has invalid value, please recheck before submit","Error");
-                                // }
+                                            setTimeout(() => {
+                                                if(response.status !== 'error') {
+                                                    $('#btndaftarid'+response.data.id).trigger('click')
+                                                }
+                                            }, 5000);
+                                        }
+                                    });
+                                } else {
+                                    DevExpress.ui.dialog.alert("Your form is not complete or has invalid value, please recheck before submit","Error");
+                                }
 
                             },
                             useSubmitBehavior: true,
@@ -498,7 +498,10 @@ const popupContentTemplate = function (daftarid,mode) {
                                             valueExpr: 'id',
                                         displayExpr: 'nama_tahapan_proses',
                                         },
-                                        validationRules: [{ type: "required" }]
+                                        editorOptions: {
+                                            disabled : true
+                                        },
+                                        // validationRules: [{ type: "required" }]
                                     },
                                     { 
                                         dataField: "tgl_mulai_riwayat_proses",
@@ -867,7 +870,8 @@ var dataGrid = $("#dokumen").dxDataGrid({
     dataSource: store,
     allowColumnReordering: true,
     allowColumnResizing: true,
-    columnsAutoWidth: true,
+    // columnsAutoWidth: true,
+    columnHidingEnabled: true,
     wordWrapEnabled: true,
     showBorders: true,
     filterRow: { visible: true },
@@ -1041,7 +1045,7 @@ function editCellTemplate(cellElement, cellInfo) {
   let fileUploaderElement = document.createElement("div");
   let fileUploader = $(fileUploaderElement).dxFileUploader({
     multiple: false,
-    accept: "image/*",
+    accept: "*",
     uploadMode: "instantly",
     name: "myFile",
     uploadUrl: apiurl + "/upload-berkas",
@@ -1064,12 +1068,15 @@ function editCellTemplate(cellElement, cellInfo) {
     }
   }).dxFileUploader("instance");
 
-  let imageElement = document.createElement("img");
-  imageElement.classList.add("uploadedImage");
-  imageElement.setAttribute('src', "upload/" +cellInfo.value);
-  imageElement.setAttribute('height', "50");
+//   if(cellInfo.value !== null) {
 
-  cellElement.append(imageElement);
+      let imageElement = document.createElement("img");
+      imageElement.classList.add("uploadedImage");
+      imageElement.setAttribute('src', "upload/" +cellInfo.value);
+      imageElement.setAttribute('height', "50");
+      
+      cellElement.append(imageElement);
+    // }
   cellElement.append(fileUploaderElement);
   cellElement.append(buttonElement);
 
