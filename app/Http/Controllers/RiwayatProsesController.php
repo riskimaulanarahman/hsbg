@@ -77,12 +77,19 @@ class RiwayatProsesController extends Controller
         }
 
         try {
-    
-            $data = Riwayatproses::findOrFail($id);
-            $data->update($requestData);
-            $data->save();
 
-            return response()->json(["status" => "success", "message" => "Berhasil Ubah Data"]);
+            if ($fixed2 >= $fixed) {
+                $data = Riwayatproses::findOrFail($id);
+                $data->update($requestData);
+                $data->save();
+    
+                return response()->json(["status" => "success", "message" => "Berhasil Ubah Data"]);
+            } else {
+
+                return response()->json(["status" => "error", "message" => "Tanggal Akhir Tidak Boleh Kurang Dari Tanggal Awal"]);
+                
+            }
+    
 
         } catch (\Exception $e){
 

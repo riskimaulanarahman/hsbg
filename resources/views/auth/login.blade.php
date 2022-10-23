@@ -7,15 +7,40 @@
 	<div class="login login-with-news-feed">
 		<!-- begin news-feed -->
 		<div class="news-feed">
+			
 			<div class="news-image" style="background-image: url(https://www.inibalikpapan.com/wp-content/uploads/2019/08/Kota-Balikpapan.jpg)"></div>
+			<div class="note note-warning note-with-end-icon mb-2">
+				<div class="note-content text-end" style="font-size: 16px">
+					<h4><b>Salam Hangat!</b></h4>
+					<p>
+						Selamat datang di website Kantor Notaris dan PPAT Nurvida Shanti.
+					</p>
+					<p>
+						Website ini kami disajikan untuk dapat membantu memberikan informasi praktis secara online mengenai hal-hal yang berhubungan dengan pelayanan jasa Notaris dan PPAT (Pejabat Pembuat Akta Tanah) dari kantor kami.
+					</p>
+					<p>
+						Disediakan pula beberapa tautan yang dapat diunduh sebagai bahan bacaan, yaitu terkait hal-hal yang paling sering dibutuhkan oleh klien selama pengurusan di kantor kami yaitu:
+						<ul>
+							<li>Apa saja yang wajib dan/atau disarankan dibuat dalam Akta Notaris dan apa saja yang wajib dan/atau disarankan dibuat dalam Akta PPAT.</li> 
+							<li>Persyaratan Pendirian: Perseroan Terbatas (PT), Yayasan, Perkumpulan dan CV.
+							<li>Persyaratan atas hal-hal yang terkait dengan Pertanahan: Jual Beli, Hibah, Sewa Menyewa, dll.</li>
+							<li>Beberapa artikel yang bersifat informasi praktis mengenai hukum dan layanan kantor Notaris dan PPAT.</li>
+						</ul>
+					<p>	Untuk hal-hal lain yang tidak ditemukan pada tautan dan artikel yang kami sediakan di website ini, atau ingin menanyakan informasi lebih lanjut, tinggalkan pesan di “Buku Tamu” dengan mengisi nama, email dan pesan. Notaris atau Legal Officer kantor kami akan membantu membalas pesan Bapak / Ibu.</p>
+						Hormat Kami,<br>
+						Kantor Notaris dan PPAT Nurvida Shanti
+					</p>
+				</div>
+				<div class="note-icon"><i class="fa fa-lightbulb"></i></div>
+			</div>
 			<div class="col-md-12 text-white">
 				{{-- <h1>title</h1> --}}
 			</div>
 			<div class="news-caption">
-				<h4 class="caption-title"><b>SIM Notaris (Sistem Informasi Manajemen Notaris)</b> Balikpapan</h4>
-				<p>
-					<!--Sistem Informasi Data Inovasi Daerah-->
-				</p>
+				<h4 class="caption-title">NOTARIS & PPAT</h4>
+				<h4 class="caption-title"><b>Nurvida Shanti, S.H.,M.Kn.</b></h4>
+				<small>Jln. RE Martadinata No.22 RT.037 Telaga Sari Kota Balikpapan</small>
+				<p><small>Telp. 081 330 669 686</small></p>
 			</div>
 		</div>
 		<!-- end news-feed -->

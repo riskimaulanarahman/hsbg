@@ -349,7 +349,8 @@ const popupContentTemplate = function (daftarid,mode) {
                                 dataSource: store1,
                                 allowColumnReordering: true,
                                 allowColumnResizing: true,
-                                columnsAutoWidth: true,
+                                // columnsAutoWidth: true,
+                                columnHidingEnabled: true,
                                 wordWrapEnabled: true,
                                 showBorders: true,
                                 filterRow: { visible: true },
@@ -457,7 +458,8 @@ const popupContentTemplate = function (daftarid,mode) {
                                 dataSource: store2,
                                 allowColumnReordering: true,
                                 allowColumnResizing: true,
-                                columnsAutoWidth: true,
+                                // columnsAutoWidth: true,
+                                columnHidingEnabled: true,
                                 wordWrapEnabled: true,
                                 showBorders: true,
                                 filterRow: { visible: false },
@@ -588,7 +590,8 @@ const popupContentTemplate = function (daftarid,mode) {
                                 dataSource: store3,
                                 allowColumnReordering: true,
                                 allowColumnResizing: true,
-                                columnsAutoWidth: true,
+                                // columnsAutoWidth: true,
+                                columnHidingEnabled: true,
                                 wordWrapEnabled: true,
                                 showBorders: true,
                                 filterRow: { visible: false },
@@ -903,6 +906,14 @@ var dataGrid = $("#dokumen").dxDataGrid({
                 }).appendTo(container);
             
             }
+        },     
+        { 
+            dataField: "klien.nama_lengkap_klien",
+            caption: "Klien"
+        },
+        {
+            dataField: "pengurusanjasa.nama_pengurusan",
+            caption: "Jenis Jasa"
         },
         {
             dataField: 'status_aktif',
@@ -911,14 +922,6 @@ var dataGrid = $("#dokumen").dxDataGrid({
                 var arrText = ["<span class='btn btn-success btn-xs'>Aktif</span>","<span class='btn btn-danger btn-xs'>Tidak Aktif</span>"];
                 return arrText[e.value];
             }
-        },
-        { 
-            dataField: "klien.nama_lengkap_klien",
-            caption: "Klien"
-        },
-        {
-            dataField: "pengurusanjasa.nama_pengurusan",
-            caption: "Jenis Jasa"
         },
         {
             dataField: "tanggal_daftar_pengurusan",
