@@ -231,6 +231,7 @@ const popupContentTemplate = function (daftarid,mode) {
                         itemType: 'button',
                         horizontalAlignment: 'left',
                         visible: (mode=='edit') ?true:false,
+                        disabled: (role == 'admin' || role == 'staff') ? false : true,
                         buttonOptions: {
                             text: 'Ubah',
                             type: 'default',
@@ -349,8 +350,8 @@ const popupContentTemplate = function (daftarid,mode) {
                                 dataSource: store1,
                                 allowColumnReordering: true,
                                 allowColumnResizing: true,
-                                // columnsAutoWidth: true,
-                                columnHidingEnabled: true,
+                                columnsAutoWidth: true,
+                                // columnHidingEnabled: true,
                                 wordWrapEnabled: true,
                                 showBorders: true,
                                 filterRow: { visible: true },
@@ -359,9 +360,9 @@ const popupContentTemplate = function (daftarid,mode) {
                                 editing: {
                                     useIcons:true,
                                     mode: "popup",
-                                    allowAdding: true,
-                                    allowUpdating: true,
-                                    allowDeleting: true,
+                                    allowAdding: (role == 'admin' || role == 'staff') ? true : false,
+                                    allowUpdating: (role == 'admin' || role == 'staff') ? true : false,
+                                    allowDeleting: (role == 'admin') ? true : false,
                                 },
                                 searchPanel: {
                                     visible: true,
@@ -458,8 +459,8 @@ const popupContentTemplate = function (daftarid,mode) {
                                 dataSource: store2,
                                 allowColumnReordering: true,
                                 allowColumnResizing: true,
-                                // columnsAutoWidth: true,
-                                columnHidingEnabled: true,
+                                columnsAutoWidth: true,
+                                // columnHidingEnabled: true,
                                 wordWrapEnabled: true,
                                 showBorders: true,
                                 filterRow: { visible: false },
@@ -469,7 +470,7 @@ const popupContentTemplate = function (daftarid,mode) {
                                     useIcons:true,
                                     mode: "popup",
                                     allowAdding: false,
-                                    allowUpdating: true,
+                                    allowUpdating: (role == 'admin' || role == 'staff' || role == 'operator') ? true : false,
                                     allowDeleting: false,
                                 },
                                 searchPanel: {
@@ -590,8 +591,8 @@ const popupContentTemplate = function (daftarid,mode) {
                                 dataSource: store3,
                                 allowColumnReordering: true,
                                 allowColumnResizing: true,
-                                // columnsAutoWidth: true,
-                                columnHidingEnabled: true,
+                                columnsAutoWidth: true,
+                                // columnHidingEnabled: true,
                                 wordWrapEnabled: true,
                                 showBorders: true,
                                 filterRow: { visible: false },
@@ -600,9 +601,9 @@ const popupContentTemplate = function (daftarid,mode) {
                                 editing: {
                                     useIcons:true,
                                     mode: "popup",
-                                    allowAdding: true,
-                                    allowUpdating: true,
-                                    allowDeleting: true,
+                                    allowAdding: (role == 'keuangan' || role == 'admin') ? true : false,
+                                    allowUpdating: (role == 'keuangan' || role == 'admin') ? true : false,
+                                    allowDeleting: (role == 'admin') ? true : false,
                                 },
                                 searchPanel: {
                                     visible: true,
@@ -799,8 +800,17 @@ const popup = $('#popup').dxPopup({
     fullScreen : false,
     onShown: function() {
         dxFormInstance.option("formData",maindata);
-        dxFormInstance.itemOption("id_ref_pengurusan_jasa", "editorOptions", {disabled:(maindata.id_ref_pengurusan_jasa == null) ? false : true});
-        dxFormInstance.itemOption("id_klien", "editorOptions", {disabled:(maindata.id_klien == null) ? false : true});
+        dxFormInstance.itemOption("id_ref_pengurusan_jasa", "editorOptions", {readOnly:(maindata.id_ref_pengurusan_jasa == null) ? false : true});
+        dxFormInstance.itemOption("id_klien", "editorOptions", {readOnly:(maindata.id_klien == null) ? false : true});
+        if(role !== 'admin' || role !== 'staff') {
+            dxFormInstance.itemOption("proses_biasa_cepat", "editorOptions", {readOnly: true });
+            dxFormInstance.itemOption("tanggal_daftar_pengurusan", "editorOptions", {readOnly: true });
+            dxFormInstance.itemOption("total_biaya_daftar_pengurusan", "editorOptions", {readOnly: true });
+            dxFormInstance.itemOption("status_lunas", "editorOptions", {readOnly: true });
+            dxFormInstance.itemOption("status_selesai", "editorOptions", {readOnly: true });
+            dxFormInstance.itemOption("status_aktif", "editorOptions", {readOnly: true });
+            dxFormInstance.itemOption("keterangan_daftar_pengurusan", "editorOptions", {readOnly: true });
+        }
     }
 
 }).dxPopup('instance');
@@ -873,8 +883,8 @@ var dataGrid = $("#dokumen").dxDataGrid({
     dataSource: store,
     allowColumnReordering: true,
     allowColumnResizing: true,
-    // columnsAutoWidth: true,
-    columnHidingEnabled: true,
+    columnsAutoWidth: true,
+    // columnHidingEnabled: true,
     wordWrapEnabled: true,
     showBorders: true,
     filterRow: { visible: true },
@@ -895,14 +905,20 @@ var dataGrid = $("#dokumen").dxDataGrid({
             caption: 'Action',
             cellTemplate: function(container, options) {
     
-                $('<button class="btn btn-info btn-xs" id="btndaftarid'+options.data.id+'">Edit</button>').addClass('dx-button').on('dxclick', function(evt) {
+                $('<button class="btn btn-info btn-xs" id="btndaftarid'+options.data.id+'"><i class="fa fa-search"></i></button>').addClass('dx-button').on('dxclick', function(evt) {
                     evt.stopPropagation();
                         var daftarid = options.data.id
                         var mode = 'edit'
-                        popup.option({
-                            contentTemplate: () => popupContentTemplate(daftarid,mode),
-                        });
-                        popup.show();
+                        // if (role == 'admin' || role == 'staff') {
+
+                            popup.option({
+                                contentTemplate: () => popupContentTemplate(daftarid,mode),
+                            });
+                            popup.show();
+
+                        // } else {
+                        //     DevExpress.ui.dialog.alert("Anda Tidak Memiliki Akses","Error");
+                        // }
                 }).appendTo(container);
             
             }
@@ -1002,6 +1018,7 @@ var dataGrid = $("#dokumen").dxDataGrid({
         },{
             location: "after",
             widget: "dxButton",
+            visible: (role == 'admin' || role == 'staff') ? true : false,
             options: {
                 hint: "Add",
                 icon: "add",
@@ -1020,12 +1037,18 @@ var dataGrid = $("#dokumen").dxDataGrid({
 //file upload
 
 function cellTemplate(container, options) {
-//   let imgElement = document.createElement("img");
-//   imgElement.setAttribute("src", "upload/" + options.value);
-//   imgElement.setAttribute("height", "50");
-//   imgElement.setAttribute("width", "70");
-  container.append('<a href="upload/'+options.value+'" target="_blank"><img src="upload/'+options.value+'" height="50" width="70"></a>');
-//   container.append('<a href="upload/'+options.value+'" target="_blank">'+imgElement+'</a>');
+    //   let imgElement = document.createElement("img");
+    //   imgElement.setAttribute("src", "upload/" + options.value);
+    //   imgElement.setAttribute("height", "50");
+    //   imgElement.setAttribute("width", "70");
+    if(options.value == null) {
+        container.append('<img src="/assets/img/nofile.png" height="50" width="70">');
+
+    } else {
+
+        container.append('<a href="upload/'+options.value+'" target="_blank"><img src="/assets/img/showfile.png" height="50" width="70"></a>');
+    }
+    //   container.append('<a href="upload/'+options.value+'" target="_blank">'+imgElement+'</a>');
 }
 
 function editCellTemplate(cellElement, cellInfo) {
@@ -1048,7 +1071,7 @@ function editCellTemplate(cellElement, cellInfo) {
   let fileUploaderElement = document.createElement("div");
   let fileUploader = $(fileUploaderElement).dxFileUploader({
     multiple: false,
-    accept: "*",
+    accept: ".docx,.pdf,.xlsx,.csv,.png,.jpg,.jpeg",
     uploadMode: "instantly",
     name: "myFile",
     uploadUrl: apiurl + "/upload-berkas",
@@ -1071,15 +1094,15 @@ function editCellTemplate(cellElement, cellInfo) {
     }
   }).dxFileUploader("instance");
 
-//   if(cellInfo.value !== null) {
-
-      let imageElement = document.createElement("img");
-      imageElement.classList.add("uploadedImage");
+  
+  let imageElement = document.createElement("img");
+  imageElement.classList.add("uploadedImage");
+  //   if(cellInfo.value !== null) {
       imageElement.setAttribute('src', "upload/" +cellInfo.value);
+// }
       imageElement.setAttribute('height', "50");
       
       cellElement.append(imageElement);
-    // }
   cellElement.append(fileUploaderElement);
   cellElement.append(buttonElement);
 

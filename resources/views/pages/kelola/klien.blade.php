@@ -65,9 +65,9 @@ var dataGrid = $("#kelola-klien").dxDataGrid({
     editing: {
         useIcons:true,
         mode: "popup",
-        allowAdding: true,
-        allowUpdating: true,
-        allowDeleting: true,
+        allowAdding: (role == 'admin' || role == 'staff') ? true : false,
+        allowUpdating: (role == 'admin' || role == 'staff') ? true : false,
+        allowDeleting: (role == 'admin') ? true : false,
     },
     scrolling: {
         mode: "virtual"

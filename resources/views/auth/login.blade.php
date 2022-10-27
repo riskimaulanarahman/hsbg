@@ -8,9 +8,9 @@
 		<!-- begin news-feed -->
 		<div class="news-feed">
 			
-			<div class="news-image" style="background-image: url(https://www.inibalikpapan.com/wp-content/uploads/2019/08/Kota-Balikpapan.jpg)"></div>
-			<div class="note note-warning note-with-end-icon mb-2">
-				<div class="note-content text-end" style="font-size: 16px">
+			<div class="news-image" style="background-image: url(/assets/img/newbglogin.jpg)"></div>
+			<div class="note note-with-end-icon mb-2" style="background-color: rgba(255, 255, 255, 0.6);">
+				<div class="note-content text-black" style="font-size: 16px">
 					<h4><b>Salam Hangat!</b></h4>
 					<p>
 						Selamat datang di website Kantor Notaris dan PPAT Nurvida Shanti.
@@ -58,6 +58,7 @@
 			</div>
 			<!-- end login-header -->
 			<!-- begin login-content -->
+			<div id="poptamu"></div>
 			<div class="login-content">
 				<form method="POST" class="margin-bottom-0" action="{{ route('login') }}">
 				{{ csrf_field() }}
@@ -91,7 +92,7 @@
 					</div>
 					<div class="m-t-20 m-b-40 p-b-5 text-inverse">
 						{{-- Belum Mempunya Akun ? Klik <a href="{{ route('register') }}">Disini</a> Untuk Daftar --}}
-						<button type="button" class="btn btn-warning btn-lg"> <i class="fa fa-book"></i> Buku Tamu</button>
+						<button type="button" id="btnbukutamu" class="btn btn-warning btn-lg"> <i class="fa fa-book"></i> Buku Tamu</button>
 						<a href="https://goo.gl/maps/iV1H2maPz7Ajnycq8" target="_blank"><button type="button" class="btn btn-danger btn-lg"> <i class="fa fa-map"></i> Lokasi</button></a>
 					</div>
 					<!-- <div class="m-t-20 m-b-40 p-b-40 text-inverse">
@@ -109,3 +110,149 @@
 	</div>
 	<!-- end login -->
 @endsection
+
+@push('scripts')
+
+<script>
+	$("#btnbukutamu").click(function(){
+		// alert('ok')
+		poptamu.option({
+			contentTemplate: () => popupContentBukutamu(),
+		});
+		poptamu.show();
+	})
+
+	const popupContentBukutamu = function () {
+        // maindata = {};
+
+        // if(daftarid !== undefined) {
+        //     $.getJSON(apiurl + "/dokumen/"+daftarid,function(response) {
+        //         $.each(response,function(x,y){
+        //             maindata[x] = y
+        //         })
+        //     })
+        // }
+
+        const scrollView = $('<div />');
+
+        scrollView.append(
+            $("<div id='bukutamuForm'>").dxForm({
+                onInitialized: function(e) {
+                    dxFormInstance = e.component;
+                },
+                labelMode : 'floating',
+                readOnly: false,
+                showColonAfterLabel: true,
+                showValidationSummary: false,
+                items: [ {
+                itemType: 'group',
+                caption: '',
+                colCount : 1,
+                items: [
+                    {
+                        dataField: 'nama_tamu',
+                        label: {text: 'Nama'},
+                        validationRules: [{type: 'required'}],
+                    },
+                    {
+                        dataField: 'notelp_tamu',
+                        label: {text: 'No. Telp'},
+                        editorType: 'dxNumberBox',
+                        validationRules: [{type: 'required'}],
+                    }, 
+                    {
+                        dataField: 'email_tamu',
+                        label: {text: 'Email'},
+                        validationRules: [{type: 'required'}],
+                    }, 
+                    {
+                        dataField: 'pesan_tamu',
+                        label: {text: 'Pesan'},
+                        colSpan: 2,
+                        editorType: 'dxTextArea',
+                        editorOptions: {
+                            height: 90
+                        },
+                        validationRules: [{type: 'required'}],
+                    }, 
+                    ],
+                }],
+                
+            }),
+            $("<hr>"),
+            
+        );
+
+        scrollView.dxScrollView({
+            width: '100%',
+            height: '100%',
+        })
+
+        return scrollView;
+
+};
+
+const poptamu = $('#poptamu').dxPopup({
+    contentTemplate: popupContentBukutamu,
+    width: 800,
+    height: 500,
+    // container: '.content',
+    showTitle: true,
+    title: 'Buku Tamu',
+    visible: false,
+    dragEnabled: false,
+    hideOnOutsideClick: false,
+    showCloseButton: true,
+    fullScreen : false,
+    toolbarItems: [{
+      widget: 'dxButton',
+      toolbar: 'bottom',
+      location: 'before',
+      options: {
+        // icon: 'email',
+        text: 'Simpan',
+        onClick() {
+            var valuespr = dxFormInstance.option("formData");
+            // valuespr.mode = 'ignore';
+
+            // console.log('from prompt :');
+            // console.log(valuespr);
+
+            var result = dxFormInstance.validate();
+            if(result.isValid) {
+                // sendRequest(apiurl + "/dokumen", "POST", valuespr).then(function(response){
+
+                //     dataGrid.refresh();
+                        
+                //     setTimeout(() => {
+                //         if(response.status !== 'error') {
+                //             $('#btndaftarid'+response.data.id).trigger('click')
+                //         }
+                //     }, 5000);
+
+                // });
+                // DevExpress.ui.dialog.alert("ok","Success");
+				DevExpress.ui.notify("Berhasil Dikirim!", "success");
+				poptamu.hide();
+
+            } else {
+                DevExpress.ui.dialog.alert("Form Isian belum lengkap!","Error");
+            }
+        },
+      },
+    }, {
+      widget: 'dxButton',
+      toolbar: 'bottom',
+      location: 'after',
+      options: {
+        text: 'Batal',
+        onClick() {
+          poptamu.hide();
+        },
+      },
+    }],
+
+}).dxPopup('instance');
+</script>
+
+@endpush
