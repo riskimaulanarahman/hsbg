@@ -28,7 +28,7 @@
 						</ul>
 					<p>	Untuk hal-hal lain yang tidak ditemukan pada tautan dan artikel yang kami sediakan di website ini, atau ingin menanyakan informasi lebih lanjut, tinggalkan pesan di “Buku Tamu” dengan mengisi nama, email dan pesan. Notaris atau Legal Officer kantor kami akan membantu membalas pesan Bapak / Ibu.</p>
 						Hormat Kami,<br>
-						Kantor Notaris dan PPAT Nurvida Shanti
+						{{-- Kantor Notaris dan PPAT Nurvida Shanti --}}
 					</p>
 				</div>
 				<div class="note-icon"><i class="fa fa-lightbulb"></i></div>
@@ -95,9 +95,9 @@
 						<button type="button" id="btnbukutamu" class="btn btn-warning btn-lg"> <i class="fa fa-book"></i> Buku Tamu</button>
 						<a href="https://goo.gl/maps/iV1H2maPz7Ajnycq8" target="_blank"><button type="button" class="btn btn-danger btn-lg"> <i class="fa fa-map"></i> Lokasi</button></a>
 					</div>
-					<!-- <div class="m-t-20 m-b-40 p-b-40 text-inverse">
-					 <a href="" target="_blank" class="f-s-20"><i class="fas fa-lg fa-fw m-r-10 fa-cloud-download-alt"></i> Download Document here</a>
-					</div> -->
+					<div class="m-t-20 m-b-40 p-b-40 text-inverse">
+						<a href="https://drive.google.com/file/d/13BYeb2GZ0YNbJbnbRaK9tJsyCeJcofkK/view?usp=sharing" target="_blank" class="f-s-20"><i class="fas fa-lg fa-fw m-r-10 fa-cloud-download-alt"></i> Download Document here</a>
+					</div>
 					<hr />
 					<p class="text-center text-grey-darker mb-0">
 						<a href="https:://pinday.co.id">pinday.co.id</a> &copy; 2020

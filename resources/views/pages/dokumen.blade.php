@@ -802,7 +802,8 @@ const popup = $('#popup').dxPopup({
         dxFormInstance.option("formData",maindata);
         dxFormInstance.itemOption("id_ref_pengurusan_jasa", "editorOptions", {readOnly:(maindata.id_ref_pengurusan_jasa == null) ? false : true});
         dxFormInstance.itemOption("id_klien", "editorOptions", {readOnly:(maindata.id_klien == null) ? false : true});
-        if(role !== 'admin' || role !== 'staff') {
+        if(role == 'admin' || role == 'staff') {
+        } else {
             dxFormInstance.itemOption("proses_biasa_cepat", "editorOptions", {readOnly: true });
             dxFormInstance.itemOption("tanggal_daftar_pengurusan", "editorOptions", {readOnly: true });
             dxFormInstance.itemOption("total_biaya_daftar_pengurusan", "editorOptions", {readOnly: true });
