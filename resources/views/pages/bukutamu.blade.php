@@ -64,7 +64,7 @@ var dataGrid = $("#bukutamu").dxDataGrid({
         mode: "batch",
         allowAdding: false,
         allowUpdating: false,
-        allowDeleting: false,
+        allowDeleting: true,
     },
     scrolling: {
         mode: "virtual"
