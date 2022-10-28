@@ -117,7 +117,8 @@ return [
         ],[
             'icon' => 'fa fa-book',
             'title' => 'Lihat Buku Tamu',
-            'url' => '#',
+            'url' => '/bukutamu',
+            'route-name' => 'menu.bukutamu'
         ]
     ]
 ];

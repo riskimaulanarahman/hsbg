@@ -2,46 +2,62 @@
 namespace App\Http\Controllers;
 
 
-class MainController extends Controller {
+class MainController extends Controller 
+{
 
-    public function refdokumenklien() {
+    public function refdokumenklien() 
+    {
         return view('pages.referensi.dokumenklien');
     }
 
-    public function refjenisbiayaperusahaan() {
+    public function refjenisbiayaperusahaan() 
+    {
         return view('pages.referensi.jenisbiayaperusahaan');
     }
 
-    public function refpengurusanjasa() {
+    public function refpengurusanjasa() 
+    {
         return view('pages.referensi.pengurusanjasa');
     }
 
-    public function reftahapanproses() {
+    public function reftahapanproses() 
+    {
         return view('pages.referensi.tahapanproses');
     }
 
-    public function refuraianbayar() {
+    public function refuraianbayar() 
+    {
         return view('pages.referensi.uraianbayar');
     }
 
-    public function refkontaklembaga() {
+    public function refkontaklembaga() 
+    {
         return view('pages.referensi.kontaklembaga');
     }
 
-    public function kelolauser() {
+    public function kelolauser() 
+    {
         return view('pages.kelola.user');
     }
 
-    public function kelolaklien() {
+    public function kelolaklien() 
+    {
         return view('pages.kelola.klien');
     }
 
-    public function dokumen() {
+    public function dokumen() 
+    {
         return view('pages.dokumen');
     }
 
-    public function bantuan() {
+    public function bantuan() 
+    {
         return view('pages.bantuan');
+    }
+
+    public function bukutamu() 
+    {
+        return view('pages.bukutamu');
     }
 
 

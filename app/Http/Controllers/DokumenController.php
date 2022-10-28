@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Model\Daftarpengurusan;
 use App\Model\Riwayatproses;
 use App\Model\Tahapanproses;
+use Auth;
 
 
 class DokumenController extends Controller
@@ -20,7 +21,8 @@ class DokumenController extends Controller
     public function index()
     {
         try {
-            
+            $user = Auth::user();
+            $wuser = ($user->role !== 'staff') ? [] : [['daftar_pengurusan.createdby','=',$user->id]];
             $data = Daftarpengurusan::selectRaw('
                 daftar_pengurusan.id,
                 daftar_pengurusan.createdby,
@@ -34,8 +36,9 @@ class DokumenController extends Controller
                 sum(riwayat_pembayaran.jumlah_pembayaran) as total_jumlah_yang_dibayar
             ')
             ->with('createdby', 'klien', 'pengurusanjasa')
-            ->leftJoin('riwayat_pembayaran','riwayat_pembayaran.id_daftar_pengurusan','daftar_pengurusan.id')
+            ->leftJoin('riwayat_pembayaran', 'riwayat_pembayaran.id_daftar_pengurusan','daftar_pengurusan.id')
             ->where('daftar_pengurusan.deleted_status', 0)
+            ->where($wuser)
             ->groupBy(
                 'daftar_pengurusan.id',
                 'daftar_pengurusan.createdby',
@@ -166,19 +169,24 @@ class DokumenController extends Controller
         $requestData = $request->all();
         $requestData['tanggal_daftar_pengurusan'] = $fixed;
         try {
+            $data = Daftarpengurusan::findOrFail($id);
 
-            $getriwayatproses = Riwayatproses::where('id_daftar_pengurusan', $id)
-            ->where('status_proses_selesai', 0)
-            ->get();
-            
-            if (count($getriwayatproses) == 0) {
-    
-                $data = Daftarpengurusan::findOrFail($id);
+            if ($request->status_selesai == 0) {
+                $getriwayatproses = Riwayatproses::where('id_daftar_pengurusan', $id)
+                ->where('status_proses_selesai', 0)
+                ->get();
+                
+                if (count($getriwayatproses) == 0) {
+                    
+                    $data->update($requestData);
+                    $data->save();
+                    
+                } else {
+                    return response()->json(["status" => "error", "message" => "Semua Proses Belum Selesai! Tidak Bisa Merubah Status", "data" => null]);
+                }
+            } else {
                 $data->update($requestData);
                 $data->save();
-
-            } else {
-                return response()->json(["status" => "error", "message" => "Semua Proses Belum Selesai! Tidak Bisa Merubah Status", "data" => null]);
             }
 
             return response()->json(["status" => "success", "message" => "Berhasil Ubah Data"]);

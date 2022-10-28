@@ -32,11 +32,13 @@ Route::group( ['as' => 'menu.','middleware' => ['auth']], function() {
     
     Route::get('/dokumen', 'MainController@dokumen')->name('dokumen');
     Route::get('/bantuan', 'MainController@bantuan')->name('bantuan');
+    Route::get('/bukutamu', 'MainController@bukutamu')->name('bukutamu');
     
     // todo : api
     Route::group( ['prefix' => 'api'], function() {
 
-            // Route::apiResource('/dokumen','DokumenController');
+            Route::apiResource('/dokumen','DokumenController');
+
         // referensi
             Route::apiResource('/dokumenklien','referensi\DokumenklienController');
             Route::apiResource('/jenisbiayaperusahaan','referensi\JenisbiayaperusahaanController');

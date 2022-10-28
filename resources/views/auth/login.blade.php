@@ -150,23 +150,23 @@
                 colCount : 1,
                 items: [
                     {
-                        dataField: 'nama_tamu',
+                        dataField: 'nama',
                         label: {text: 'Nama'},
                         validationRules: [{type: 'required'}],
                     },
                     {
-                        dataField: 'notelp_tamu',
+                        dataField: 'notelp',
                         label: {text: 'No. Telp'},
                         editorType: 'dxNumberBox',
                         validationRules: [{type: 'required'}],
                     }, 
                     {
-                        dataField: 'email_tamu',
+                        dataField: 'email',
                         label: {text: 'Email'},
-                        validationRules: [{type: 'required'}],
+                        validationRules: [{type: 'required'},{type: 'email'}],
                     }, 
                     {
-                        dataField: 'pesan_tamu',
+                        dataField: 'pesan',
                         label: {text: 'Pesan'},
                         colSpan: 2,
                         editorType: 'dxTextArea',
@@ -217,22 +217,19 @@ const poptamu = $('#poptamu').dxPopup({
 
             // console.log('from prompt :');
             // console.log(valuespr);
+			console.log(valuespr)
 
             var result = dxFormInstance.validate();
             if(result.isValid) {
-                // sendRequest(apiurl + "/dokumen", "POST", valuespr).then(function(response){
+                sendRequest(apiurl + "/bukutamu", "POST", valuespr).then(function(response){
 
-                //     dataGrid.refresh();
-                        
-                //     setTimeout(() => {
-                //         if(response.status !== 'error') {
-                //             $('#btndaftarid'+response.data.id).trigger('click')
-                //         }
-                //     }, 5000);
+                        if(response.status !== 'error') {
+							DevExpress.ui.notify("Berhasil Dikirim!", "success");
+                        } else {
+							DevExpress.ui.notify("Error!", "error");
+						}
 
-                // });
-                // DevExpress.ui.dialog.alert("ok","Success");
-				DevExpress.ui.notify("Berhasil Dikirim!", "success");
+                });
 				poptamu.hide();
 
             } else {
