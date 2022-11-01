@@ -373,11 +373,11 @@ const popupContentTemplate = function (daftarid,mode) {
                                     rowRenderingMode: 'virtual',
                                 },
                                 paging: {
-                                    pageSize: 10,
+                                    pageSize: 20,
                                 },
                                 pager: {
                                     visible: true,
-                                    allowedPageSizes: [5, 10, 'all'],
+                                    allowedPageSizes: [10, 20, 'all'],
                                     showPageSizeSelector: true,
                                     showInfo: true,
                                     showNavigationButtons: true,
@@ -482,11 +482,11 @@ const popupContentTemplate = function (daftarid,mode) {
                                     rowRenderingMode: 'virtual',
                                 },
                                 paging: {
-                                    pageSize: 10,
+                                    pageSize: 20,
                                 },
                                 pager: {
                                     visible: true,
-                                    allowedPageSizes: [5, 10, 'all'],
+                                    allowedPageSizes: [10, 20, 'all'],
                                     showPageSizeSelector: true,
                                     showInfo: true,
                                     showNavigationButtons: true,
@@ -601,8 +601,8 @@ const popupContentTemplate = function (daftarid,mode) {
                                 editing: {
                                     useIcons:true,
                                     mode: "popup",
-                                    allowAdding: (role == 'keuangan' || role == 'admin') ? true : false,
-                                    allowUpdating: (role == 'keuangan' || role == 'admin') ? true : false,
+                                    allowAdding: (role == 'staff' || role == 'admin') ? true : false,
+                                    allowUpdating: (role == 'staff' || role == 'admin') ? true : false,
                                     allowDeleting: (role == 'admin') ? true : false,
                                 },
                                 searchPanel: {
@@ -614,11 +614,11 @@ const popupContentTemplate = function (daftarid,mode) {
                                     rowRenderingMode: 'virtual',
                                 },
                                 paging: {
-                                    pageSize: 10,
+                                    pageSize: 20,
                                 },
                                 pager: {
                                     visible: true,
-                                    allowedPageSizes: [5, 10, 'all'],
+                                    allowedPageSizes: [10, 20, 'all'],
                                     showPageSizeSelector: true,
                                     showInfo: true,
                                     showNavigationButtons: true,
@@ -636,30 +636,42 @@ const popupContentTemplate = function (daftarid,mode) {
                                         validationRules: [{ type: "required" }]
                                     },
                                     {
-                                        dataField: 'jumlah_pembayaran',
+                                        dataField: 'rencana_jml_bayar',
                                         editorType: 'dxNumberBox',
                                         format: 'Rp #,##0.##',
+                                        value: 0,
                                         editorOptions: {
                                             format: 'Rp #,##0.##',
                                         },
-                                        validationRules: [{type: 'required'}],
+                                    },
+                                    {
+                                        dataField: 'jumlah_pembayaran',
+                                        caption: "Jumlah Pembayaran (diisi jika sudah ada pembayaran)",
+                                        editorType: 'dxNumberBox',
+                                        format: 'Rp #,##0.##',
+                                        value: 0,
+                                        editorOptions: {
+                                            format: 'Rp #,##0.##',
+                                        },
+                                        // validationRules: [{type: 'required'}],
                                     },
                                     { 
                                         dataField: "tanggal_pembayaran",
-                                        caption: "Tgl Pembayaran",
+                                        caption: "Tgl Pembayaran (diisi jika sudah ada pembayaran)",
                                         dataType: "date",
                                         format: "dd-MM-yyyy",
-                                        validationRules: [{type: 'required'}],
+                                        // validationRules: [{type: 'required'}],
                                     },
                                     {
                                         dataField: 'sistem_pembayaran',
+                                        caption: "Sistem Pembayaran (diisi jika sudah ada pembayaran)",
                                         lookup: {
                                             dataSource: [{id:0,value:'Cash'},{id:1,value:'Transfer'}],
                                             valueExpr: 'id',
                                             displayExpr: 'value',
                                             searchEnabled: false
                                         },
-                                        validationRules: [{type: 'required'}],
+                                        // validationRules: [{type: 'required'}],
                                     },
                                     {
                                         name: 'titipanpajak',
@@ -689,9 +701,19 @@ const popupContentTemplate = function (daftarid,mode) {
                                 summary: {
                                     totalItems: [
                                         {
+                                            column: "rencana_jml_bayar",
+                                            summaryType: 'sum',
+                                            showInColumn: "rencana_jml_bayar",
+                                            displayFormat: 'Total Rencana Pembayaran : Rp {0}',
+                                            valueFormat: {
+                                                type: 'fixedPoint',
+                                                precision: 0
+                                            },
+                                        },
+                                        {
                                             name: "NoTitipan",
                                             summaryType: 'custom',
-                                            showInColumn: "id_ref_uraian_bayar",
+                                            showInColumn: "jumlah_pembayaran",
                                             displayFormat: 'Total Biaya Pengurusan : Rp {0}',
                                             valueFormat: {
                                                 type: 'fixedPoint',
@@ -701,7 +723,7 @@ const popupContentTemplate = function (daftarid,mode) {
                                         {
                                             name: "YesTitipan",
                                             summaryType: 'custom',
-                                            showInColumn: "jumlah_pembayaran",
+                                            showInColumn: "tanggal_pembayaran",
                                             displayFormat: 'Total Titipan Pajak : Rp {0}',
                                             valueFormat: {
                                                 type: 'fixedPoint',
@@ -711,7 +733,7 @@ const popupContentTemplate = function (daftarid,mode) {
                                         {
                                             name: "TotalTitipan",
                                             summaryType: 'custom',
-                                            showInColumn: "tanggal_pembayaran",
+                                            showInColumn: "sistem_pembayaran",
                                             displayFormat: 'Grand Total Pembayaran : Rp {0}',
                                             valueFormat: {
                                                 type: 'fixedPoint',

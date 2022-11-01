@@ -75,7 +75,9 @@ class DokumenController extends Controller
         $requestData['tanggal_daftar_pengurusan'] = $fixed;
         try {
 
-                $getproses = Tahapanproses::where('id_ref_pengurusan_jasa', $request->id_ref_pengurusan_jasa)->get();
+                $getproses = Tahapanproses::where('id_ref_pengurusan_jasa', $request->id_ref_pengurusan_jasa)
+                ->orderBy('nomor_urut_tahapan_proses')
+                ->get();
                 
                 if (count($getproses) > 0) {
 

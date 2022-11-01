@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class="panel-body">
-			<div id="ref-pengurusanjasa" style="height: 640px; width:100%;"></div>
+			<div id="ref-pengurusanjasa" style="height: 400px; width:100%;"></div>
 		</div>
 	</div>
 	<!-- end panel -->
