@@ -13,6 +13,7 @@ use App\Model\Pengurusanjasa;
 use App\Model\Dokumenklien;
 use App\Model\Tahapanproses;
 use App\Model\Uraianbayar;
+use App\Model\Jenistransaksiperusahaan;
 
 class ListController extends Controller
 {
@@ -35,6 +36,10 @@ class ListController extends Controller
 
     public function listUraianbayar() {
         return Uraianbayar::select('id','uraian_bayar')->where('status_aktif',1)->get();
+    }
+
+    public function listJenistransaksi() {
+        return Jenistransaksiperusahaan::select('id','nama_transaksi_perusahaan')->where('status_aktif',1)->get();
     }
 
 }

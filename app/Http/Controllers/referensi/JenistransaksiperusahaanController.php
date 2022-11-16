@@ -5,9 +5,9 @@ namespace App\Http\Controllers\referensi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Model\Jenisbiayaperusahaan;
+use App\Model\Jenistransaksiperusahaan;
 
-class JenisbiayaperusahaanController extends Controller
+class JenistransaksiperusahaanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class JenisbiayaperusahaanController extends Controller
     public function index()
     {
         try {
-            $data = Jenisbiayaperusahaan::all();
+            $data = Jenistransaksiperusahaan::all();
 
             return response()->json(['status' => "show", "message" => "Menampilkan Data" , 'data' => $data]);
 
@@ -38,7 +38,7 @@ class JenisbiayaperusahaanController extends Controller
         try {
             $requestData = $request->all();
             ($request->status_aktif == 'false') ? $requestData['status_aktif'] = 0 : $requestData['status_aktif'] = 1;
-            Jenisbiayaperusahaan::create($requestData);
+            Jenistransaksiperusahaan::create($requestData);
             return response()->json(["status" => "success", "message" => "Berhasil Menambahkan Data"]);
 
         } catch (\Exception $e){
@@ -71,7 +71,7 @@ class JenisbiayaperusahaanController extends Controller
         ($request->status_aktif == 'false') ? $requestData['status_aktif'] = 0 : $requestData['status_aktif'] = 1;
         try {
     
-            $data = Jenisbiayaperusahaan::findOrFail($id);
+            $data = Jenistransaksiperusahaan::findOrFail($id);
             $data->update($requestData);
             $data->save();
 
@@ -92,7 +92,7 @@ class JenisbiayaperusahaanController extends Controller
     public function destroy($id)
     {
         try {
-            $data = Jenisbiayaperusahaan::findOrFail($id);
+            $data = Jenistransaksiperusahaan::findOrFail($id);
             $data->delete();
             return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
 

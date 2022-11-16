@@ -107,6 +107,17 @@
         }),
         sort: "nama_tahapan_proses"
     }
+
+    listJenistransaksi = {
+        store: new DevExpress.data.CustomStore({
+            key: "id",
+            loadMode: "raw",
+            load: function() {
+                return $.post(apiurl + "/list-jenistransaksi");
+            }
+        }),
+        sort: "nama_transaksi_perusahaan"
+    }
     
     
     //log

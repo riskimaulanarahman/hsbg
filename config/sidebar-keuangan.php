@@ -35,6 +35,11 @@ return [
                     'title' => 'Data Pengurusan',
                     'route-name' => 'menu.dokumen'
                 ]]
+        ],[
+            'icon' => 'fa fa-wallet',
+            'title' => 'Keuangan Perusahaan',
+            'url' => '/keuangan-perusahaan',
+            'route-name' => 'menu.keuanganperusahaan'
         ]
     ]
 ];

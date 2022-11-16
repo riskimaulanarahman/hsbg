@@ -15,7 +15,7 @@ Route::group( ['as' => 'menu.','middleware' => ['auth']], function() {
     // todo : referensi
     Route::group( ['prefix' => 'referensi','as' => 'referensi.'], function() {
         Route::get('/dokumen-klien','MainController@refdokumenklien')->name('dokumenklien');
-        Route::get('/jenis-biaya-perusahaan','MainController@refjenisbiayaperusahaan')->name('jenisbiayaperusahaan');
+        Route::get('/jenis-transaksi-perusahaan','MainController@refjenistransaksiperusahaan')->name('jenistransaksiperusahaan');
         Route::get('/pengurusan-jasa','MainController@refpengurusanjasa')->name('pengurusanjasa');
         Route::get('/tahapan-proses','MainController@reftahapanproses')->name('tahapanproses');
         Route::get('/uraian-bayar','MainController@refuraianbayar')->name('uraianbayar');
@@ -33,6 +33,7 @@ Route::group( ['as' => 'menu.','middleware' => ['auth']], function() {
     Route::get('/dokumen', 'MainController@dokumen')->name('dokumen');
     Route::get('/bantuan', 'MainController@bantuan')->name('bantuan');
     Route::get('/bukutamu', 'MainController@bukutamu')->name('bukutamu');
+    Route::get('/keuangan-perusahaan', 'MainController@keuanganperusahaan')->name('keuanganperusahaan');
     
     // todo : api
     Route::group( ['prefix' => 'api'], function() {
@@ -41,7 +42,7 @@ Route::group( ['as' => 'menu.','middleware' => ['auth']], function() {
 
         // referensi
             Route::apiResource('/dokumenklien','referensi\DokumenklienController');
-            Route::apiResource('/jenisbiayaperusahaan','referensi\JenisbiayaperusahaanController');
+            Route::apiResource('/jenistransaksiperusahaan','referensi\JenistransaksiperusahaanController');
             Route::apiResource('/pengurusanjasa','referensi\PengurusanjasaController');
             Route::apiResource('/tahapanproses','referensi\TahapanprosesController');
             Route::apiResource('/uraianbayar','referensi\UraianbayarController');
@@ -49,6 +50,8 @@ Route::group( ['as' => 'menu.','middleware' => ['auth']], function() {
         // kelola  
             Route::apiResource('/kelola-user','kelola\UserController');
             Route::apiResource('/kelola-klien','kelola\KlienController');
+            
+            Route::apiResource('/keuanganperusahaan','KeuanganperusahaanController');
 
     }); 
 

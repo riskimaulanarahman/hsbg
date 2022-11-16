@@ -36,6 +36,11 @@ return [
                     'route-name' => 'menu.dokumen'
                 ]]
         ],[
+            'icon' => 'fa fa-wallet',
+            'title' => 'Keuangan Perusahaan',
+            'url' => '/keuangan-perusahaan',
+            'route-name' => 'menu.keuanganperusahaan'
+        ],[
             'icon' => 'fa fa-cog',
             'title' => 'Kelola Sistem',
             'url' => 'javascript:;',
@@ -73,9 +78,9 @@ return [
                     'route-name' => 'menu.referensi.kontaklembaga'
                 ],
                 [
-                    'url' => '/referensi/jenis-biaya-perusahaan',
-                    'title' => 'Jenis Biaya Perusahaan',
-                    'route-name' => 'menu.referensi.jenisbiayaperusahaan'
+                    'url' => '/referensi/jenis-transaksi-perusahaan',
+                    'title' => 'Jenis Transaksi Perusahaan',
+                    'route-name' => 'menu.referensi.jenistransaksiperusahaan'
                 ],
                 [
                     'url' => '/referensi/pengurusan-jasa',
@@ -93,27 +98,29 @@ return [
                     'route-name' => 'menu.referensi.uraianbayar'
                 ],
             ]
-        ],[
-            'icon' => 'fa fa-tools',
-            'title' => 'Tools',
-            'url' => 'javascript:;',
-            'caret' => true,
-            'sub_menu' => [
-                [
-                    'url' => '#',
-                    'title' => 'Keuangan Operasional',
-                    'route-name' => '#'
-                ],
-                [
-                    'url' => '#',
-                    'title' => 'Atur Notifikasi',
-                    'route-name' => '#'
-                ],
-                [
-                    'url' => '/bantuan',
-                    'title' => 'Bantuan',
-                    'route-name' => 'menu.bantuan'
-                ]]
+        ],
+        // [
+        //     'icon' => 'fa fa-tools',
+        //     'title' => 'Tools',
+        //     'url' => 'javascript:;',
+        //     'caret' => true,
+        //     'sub_menu' => [
+        //         [
+        //             'url' => '#',
+        //             'title' => 'Atur Notifikasi',
+        //             'route-name' => '#'
+        //         ],
+        //         [
+        //             'url' => '/bantuan',
+        //             'title' => 'Bantuan',
+        //             'route-name' => 'menu.bantuan'
+        //         ]]
+        // ],
+        [
+            'icon' => 'fa fa-question-circle',
+            'title' => 'Bantuan',
+            'url' => '/bantuan',
+            'route-name' => 'menu.bantuan'
         ],[
             'icon' => 'fa fa-book',
             'title' => 'Lihat Buku Tamu',

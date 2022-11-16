@@ -26,6 +26,7 @@
 			<div id="dokumen" style="height: 640px; width:100%;"></div>
             <div id="popup"></div>
             <div id="popprompt"></div>
+            <div id="large-indicator"></div>
             
 		</div>
 	</div>
@@ -73,6 +74,24 @@ const accordionItems = [
         Title: '<i class="fa fa-file-invoice-dollar"> Riwayat Pembayaran </i>',
     },
 ];
+
+const loadPanel = $('.loadpanel').dxLoadPanel({
+    shadingColor: 'rgba(0,0,0,0.4)',
+    position: { of: '#klienForm' },
+    visible: false,
+    showIndicator: true,
+    showPane: true,
+    shading: true,
+    hideOnOutsideClick: false,
+    onShown() {
+      setTimeout(() => {
+        loadPanel.hide();
+      }, 3000);
+    },
+    onHidden() {
+    //   showEmployeeInfo(employee);
+    },
+  }).dxLoadPanel('instance');
 
 const popupContentPrompt = function (data) {
     
@@ -281,11 +300,14 @@ const popupContentTemplate = function (daftarid,mode) {
                                         } else {
 
                                             dataGrid.refresh();
+                                            loadPanel.show();
+
                                             
                                             setTimeout(() => {
-                                                if(response.status !== 'error') {
-                                                    $('#btndaftarid'+response.data.id).trigger('click')
-                                                }
+                                            //     if(response.status !== 'error') {
+                                            //         $('#btndaftarid'+response.data.id).trigger('click')
+                                            //     }
+                                            loadPanel.hide();
                                             }, 5000);
                                         }
                                     });
@@ -870,8 +892,11 @@ const popprompt = $('#popprompt').dxPopup({
 
                     popprompt.hide();
                     dataGrid.refresh();
+                    loadPanel.show()
                         
                     setTimeout(() => {
+                        loadPanel.hide()
+
                         if(response.status !== 'error') {
                             $('#btndaftarid'+response.data.id).trigger('click')
                         }

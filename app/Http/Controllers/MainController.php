@@ -10,9 +10,9 @@ class MainController extends Controller
         return view('pages.referensi.dokumenklien');
     }
 
-    public function refjenisbiayaperusahaan() 
+    public function refjenistransaksiperusahaan() 
     {
-        return view('pages.referensi.jenisbiayaperusahaan');
+        return view('pages.referensi.jenistransaksiperusahaan');
     }
 
     public function refpengurusanjasa() 
@@ -58,6 +58,11 @@ class MainController extends Controller
     public function bukutamu() 
     {
         return view('pages.bukutamu');
+    }
+
+    public function keuanganperusahaan() 
+    {
+        return view('pages.keuanganperusahaan');
     }
 
 

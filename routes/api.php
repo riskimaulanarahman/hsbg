@@ -36,6 +36,7 @@ Route::post('list-pengurusanjasa', 'API\ListController@listPengurusanjasa');
 Route::post('list-dokumenklien', 'API\ListController@listDokumenklien');
 Route::post('list-tahapanproses', 'API\ListController@listTahapanproses');
 Route::post('list-uraianbayar', 'API\ListController@listUraianbayar');
+Route::post('list-jenistransaksi', 'API\ListController@listJenistransaksi');
 
 //cetak PDF
 // Route::get('/cetak-kegiatan/{bulan}/{tahun}/{rt}','KegiatanLaporanController@cetakkegiatan')->name('cetak-kegiatan');

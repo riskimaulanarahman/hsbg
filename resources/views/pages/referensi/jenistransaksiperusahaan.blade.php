@@ -1,12 +1,12 @@
 @extends('layouts.default')
 
-@section('title', 'Referensi | Jenis Biaya Perusahaan')
+@section('title', 'Referensi | Jenis Transaksi Perusahaan')
 
 @section('content')
 	<!-- begin panel -->
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<h4 class="panel-title">Referensi - Jenis Biaya Perusahaan</h4>
+			<h4 class="panel-title">Referensi - Jenis Transaksi Perusahaan</h4>
 			<div class="panel-heading-btn">
 				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class="panel-body">
-			<div id="ref-jenisbiayaperusahaan" style="height: 400px; width:100%;"></div>
+			<div id="ref-jenistransaksiperusahaan" style="height: 400px; width:100%;"></div>
 		</div>
 	</div>
 	<!-- end panel -->
@@ -28,16 +28,16 @@
 var store = new DevExpress.data.CustomStore({
     key: "id",
     load: function() {
-        return sendRequest(apiurl + "/jenisbiayaperusahaan");
+        return sendRequest(apiurl + "/jenistransaksiperusahaan");
     },
     insert: function(values) {
-        return sendRequest(apiurl + "/jenisbiayaperusahaan", "POST", values);
+        return sendRequest(apiurl + "/jenistransaksiperusahaan", "POST", values);
     },
     update: function(key, values) {
-        return sendRequest(apiurl + "/jenisbiayaperusahaan/"+key, "PUT", values);
+        return sendRequest(apiurl + "/jenistransaksiperusahaan/"+key, "PUT", values);
     },
     remove: function(key) {
-        return sendRequest(apiurl + "/jenisbiayaperusahaan/"+key, "DELETE");
+        return sendRequest(apiurl + "/jenistransaksiperusahaan/"+key, "DELETE");
     },
 });
 
@@ -48,7 +48,7 @@ function moveEditColumnToLeft(dataGrid) {
     });
 }
 // attribute
-var dataGrid = $("#ref-jenisbiayaperusahaan").dxDataGrid({    
+var dataGrid = $("#ref-jenistransaksiperusahaan").dxDataGrid({    
     dataSource: store,
     allowColumnReordering: true,
     allowColumnResizing: true,
@@ -71,7 +71,7 @@ var dataGrid = $("#ref-jenisbiayaperusahaan").dxDataGrid({
     },
     columns: [
         { 
-            dataField: "nama_biaya_perusahaan",
+            dataField: "nama_transaksi_perusahaan",
             sortOrder: "asc",
             validationRules: [
                 { 
@@ -80,7 +80,16 @@ var dataGrid = $("#ref-jenisbiayaperusahaan").dxDataGrid({
             ]
         },
 		{ 
-			dataField: "keterangan_biaya_operasional",
+			dataField: "keterangan_transaksi",
+        },
+        { 
+			dataField: "jenis_transaksi",
+            lookup: {
+                dataSource: [{id:0,value:'Masuk'},{id:1,value:'Keluar'}],
+                valueExpr: 'value',
+                displayExpr: 'value',
+                searchEnabled: false
+            },
         },
 		{ 
 			dataField: "status_aktif",
@@ -95,7 +104,7 @@ var dataGrid = $("#ref-jenisbiayaperusahaan").dxDataGrid({
     ],
     export: {
         enabled: true,
-        fileName: "referensi-jenisbiayaperusahaan",
+        fileName: "referensi-jenistransaksiperusahaan",
         excelFilterEnabled: true,
         allowExportSelectedData: true
     },
