@@ -62,9 +62,9 @@ var dataGrid = $("#keuanganperusahaan").dxDataGrid({
     editing: {
         useIcons:true,
         mode: "popup",
-        allowAdding: (role == 'admin' || role == 'keuangan') ? true : false,,
-        allowUpdating: (role == 'admin' || role == 'keuangan') ? true : false,,
-        allowDeleting: (role == 'admin' || role == 'keuangan') ? true : false,,
+        allowAdding: (role == 'admin' || role == 'keuangan') ? true : false,
+        allowUpdating: (role == 'admin' || role == 'keuangan') ? true : false,
+        allowDeleting: (role == 'admin' || role == 'keuangan') ? true : false,
     },
     scrolling: {
         mode: "virtual"

@@ -119,7 +119,7 @@ return [
         [
             'icon' => 'fa fa-question-circle',
             'title' => 'Bantuan',
-            'url' => '/bantuan',
+            'url' => 'https://drive.google.com/file/d/13BYeb2GZ0YNbJbnbRaK9tJsyCeJcofkK/view?usp=sharing',
             'route-name' => 'menu.bantuan'
         ],[
             'icon' => 'fa fa-book',
