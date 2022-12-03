@@ -52,6 +52,11 @@ return [
                     'route-name' => 'menu.kelola.user'
                 ],
                 [
+                    'url' => '/kelola/karyawan',
+                    'title' => 'Data Karyawan',
+                    'route-name' => 'menu.kelola.karyawan'
+                ],
+                [
                     'url' => '#',
                     'title' => 'Inisialisasi Kantor',
                     'route-name' => '#'

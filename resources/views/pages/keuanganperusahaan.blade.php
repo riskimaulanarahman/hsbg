@@ -81,6 +81,7 @@ var dataGrid = $("#keuanganperusahaan").dxDataGrid({
             validationRules: [{ type: "required" }]
         },
         { 
+            caption: "Nilai Transaksi",
             dataField: "jumlah_nilai_transaksi",
             editorType: 'dxNumberBox',
             format: 'Rp #,##0.##',
@@ -110,6 +111,15 @@ var dataGrid = $("#keuanganperusahaan").dxDataGrid({
             allowSorting: false,
             cellTemplate: cellTemplate,
             editCellTemplate: editCellTemplate,
+        },
+        {   
+            caption: "Nama karyawan",
+            dataField: "id_karyawan_penerima_gaji",
+            lookup: {
+                dataSource: listKaryawan,  
+                valueExpr: 'id',
+                displayExpr: 'nama_lengkap',
+            },
         },
         { 
             dataField: "keterangan_transaksi",

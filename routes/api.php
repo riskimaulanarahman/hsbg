@@ -32,6 +32,7 @@ Route::post('/upload-berkas', 'BerkasController@update')->name('uploadberkas');
 
 //list
 Route::post('list-klien', 'API\ListController@listKlien');
+Route::post('list-karyawan', 'API\ListController@listKaryawan');
 Route::post('list-pengurusanjasa', 'API\ListController@listPengurusanjasa');
 Route::post('list-dokumenklien', 'API\ListController@listDokumenklien');
 Route::post('list-tahapanproses', 'API\ListController@listTahapanproses');

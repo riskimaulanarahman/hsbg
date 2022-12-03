@@ -45,6 +45,11 @@ class MainController extends Controller
         return view('pages.kelola.klien');
     }
 
+    public function kelolakaryawan() 
+    {
+        return view('pages.kelola.karyawan');
+    }
+
     public function dokumen() 
     {
         return view('pages.dokumen');

@@ -9,6 +9,7 @@ use Hash;
 use Illuminate\Support\Carbon;
 
 use App\Model\Klien;
+use App\Model\Karyawan;
 use App\Model\Pengurusanjasa;
 use App\Model\Dokumenklien;
 use App\Model\Tahapanproses;
@@ -40,6 +41,10 @@ class ListController extends Controller
 
     public function listJenistransaksi() {
         return Jenistransaksiperusahaan::select('id','nama_transaksi_perusahaan')->where('status_aktif',1)->get();
+    }
+
+    public function listKaryawan() {
+        return Karyawan::select('id','nama_lengkap')->where('deleted_status',0)->get();
     }
 
 }

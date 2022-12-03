@@ -118,6 +118,17 @@
         }),
         sort: "nama_transaksi_perusahaan"
     }
+
+    listKaryawan = {
+        store: new DevExpress.data.CustomStore({
+            key: "id",
+            loadMode: "raw",
+            load: function() {
+                return $.post(apiurl + "/list-karyawan");
+            }
+        }),
+        sort: "nama_lengkap"
+    }
     
     
     //log

@@ -199,7 +199,7 @@ var handleAreaChart = function() {
 		}],
 
 		xaxis: {
-			type: 'datetime',
+			type: 'time',
 			categories: ['2019-09-19T00:00:00', '2019-09-19T01:30:00', '2019-09-19T02:30:00', '2019-09-19T03:30:00', '2019-09-19T04:30:00', '2019-09-19T05:30:00', '2019-09-19T06:30:00'],
 			axisBorder: {
 				show: true,
@@ -688,7 +688,7 @@ var handleCandlestickChart = function() {
 			align: 'left'
 		},
 		xaxis: {
-			type: 'datetime',
+			type: 'time',
 			axisBorder: {
 				show: true,
 				color: COLOR_SILVER_TRANSPARENT_5,
