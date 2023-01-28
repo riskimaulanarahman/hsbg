@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 class MainController extends Controller 
 {
 
-    public function refdokumenklien() 
+    public function refstatus() 
     {
-        return view('pages.referensi.dokumenklien');
+        return view('pages.referensi.status');
+    }
+
+    public function refmitra() 
+    {
+        return view('pages.referensi.mitra');
+    }
+
+    public function project() 
+    {
+        return view('pages.project');
     }
 
     public function refjenistransaksiperusahaan() 

@@ -18,7 +18,7 @@
 			<span class="icon-bar"></span>
 		</button>
 		@endif
-		<a href="/" class="navbar-brand"><i class="fa fa-square p-r-5"></i><b> SIM Notaris</b></a>
+		<a href="/" class="navbar-brand"><img style="max-width:50px;" src="/assets/img/logo/telkom.png" alt=""><b>&nbsp; Telkom - REG 6</b></a>
 		@if ($headerMegaMenu)
 			<button type="button" class="navbar-toggle pt-0 pb-0 mr-0" data-toggle="collapse" data-target="#top-navbar">
 				<span class="fa-stack fa-lg text-inverse">

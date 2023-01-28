@@ -56,7 +56,7 @@
 		});
     }
 
-    RoleType = [{id:1,roletype:"admin"},{id:2,roletype:"staff"},{id:3,roletype:"keuangan"},{id:4,roletype:"operator"}];
+    RoleType = [{id:1,roletype:"admin"},{id:2,roletype:"user"}];
     // attribute
     dataGrid = $("#master-user").dxDataGrid({    
         dataSource: store,
