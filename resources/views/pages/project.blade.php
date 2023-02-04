@@ -387,16 +387,16 @@ const popupContentTemplate = function (daftarid,mode) {
                                     //     cellTemplate: cellTemplate,
                                     //     editCellTemplate: editCellTemplate,
                                     // },
-                                    // { 
-                                    //     dataField: "tanggal",
-                                    //     dataType: "date",
-                                    //     editorType: 'dxDateBox',
-                                    //     format: "dd-MM-yyyy",
-                                    //     width: 100,
-                                    //     editorOptions: {
-                                    //         displayFormat: "dd-MM-yyyy"
-                                    //     },
-                                    // },
+                                    { 
+                                        dataField: "tanggal",
+                                        dataType: "date",
+                                        editorType: 'dxDateBox',
+                                        format: "dd-MM-yyyy",
+                                        width: 100,
+                                        editorOptions: {
+                                            displayFormat: "dd-MM-yyyy"
+                                        },
+                                    },
                                     { 
                                         dataField: "sub_status",
                                         caption: "Sub Status",
@@ -540,6 +540,59 @@ const popupContentTemplate = function (daftarid,mode) {
                                     },
                                 
                                 ],
+                                summary: {
+                                    totalItems: [
+                                        {
+                                            column: 'galian_realisasi',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
+                                            column: 'penarikanhdpe_realisasi',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
+                                            column: 'tiang_realisasi',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
+                                            column: 'penarikankabel_realisasi',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
+                                            column: 'hhmh_realisasi',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
+                                            column: 'otbodp_realisasi',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
+                                            column: 'terminasi_realisasi',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                    ],
+                                },
                                 onInitialized: function(e) {
                                     dxGridInstance1 = e.component;
                                 },

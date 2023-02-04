@@ -62,7 +62,7 @@ var dataGrid = $("#ref-mitra").dxDataGrid({
         mode: "cell",
         allowAdding: true,
         allowUpdating: true,
-        allowDeleting: false,
+        allowDeleting: true,
     },
     scrolling: {
         mode: "virtual"
