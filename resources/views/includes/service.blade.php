@@ -53,84 +53,28 @@
         
     //get list
     
-    listKlien = {
+    listMitra = {
         store: new DevExpress.data.CustomStore({
             key: "id",
             loadMode: "raw",
             load: function() {
-                return $.post(apiurl + "/list-klien");
+                return $.post(apiurl + "/list-mitra");
             }
         }),
-        sort: "nama_lengkap_klien"
+        sort: "nama_mitra"
     }
 
-    listPengurusanjasa = {
+    listsubStatus = {
         store: new DevExpress.data.CustomStore({
             key: "id",
             loadMode: "raw",
             load: function() {
-                return $.post(apiurl + "/list-pengurusanjasa");
+                return $.post(apiurl + "/list-substatus");
             }
         }),
-        sort: "nama_pengurusan"
+        sort: "substatus"
     }
 
-    listDokumenklien = {
-        store: new DevExpress.data.CustomStore({
-            key: "id",
-            loadMode: "raw",
-            load: function() {
-                return $.post(apiurl + "/list-dokumenklien");
-            }
-        }),
-        sort: "nama_dokumen_klien"
-    }
-
-    listTahapanproses = {
-        store: new DevExpress.data.CustomStore({
-            key: "id",
-            loadMode: "raw",
-            load: function() {
-                return $.post(apiurl + "/list-tahapanproses");
-            }
-        }),
-        sort: "nama_tahapan_proses"
-    }
-
-    listUraianbayar = {
-        store: new DevExpress.data.CustomStore({
-            key: "id",
-            loadMode: "raw",
-            load: function() {
-                return $.post(apiurl + "/list-uraianbayar");
-            }
-        }),
-        sort: "nama_tahapan_proses"
-    }
-
-    listJenistransaksi = {
-        store: new DevExpress.data.CustomStore({
-            key: "id",
-            loadMode: "raw",
-            load: function() {
-                return $.post(apiurl + "/list-jenistransaksi");
-            }
-        }),
-        sort: "nama_transaksi_perusahaan"
-    }
-
-    listKaryawan = {
-        store: new DevExpress.data.CustomStore({
-            key: "id",
-            loadMode: "raw",
-            load: function() {
-                return $.post(apiurl + "/list-karyawan");
-            }
-        }),
-        sort: "nama_lengkap"
-    }
-    
-    
     //log
     function logSuccess(valusername, method, url, data, token) {
         var d = $.Deferred();

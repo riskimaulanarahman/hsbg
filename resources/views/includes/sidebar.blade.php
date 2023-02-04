@@ -89,12 +89,8 @@
 
 				if(Auth::user()->role == 'admin') {
 					$optmenu = 'sidebar-admin.menu';
-				} elseif(Auth::user()->role == 'keuangan') {
-					$optmenu = 'sidebar-keuangan.menu';
-				} elseif(Auth::user()->role == 'staff') {
-					$optmenu = 'sidebar-staff.menu';
-				} elseif(Auth::user()->role == 'operator') {
-					$optmenu = 'sidebar-operator.menu';
+				} elseif(Auth::user()->role == 'user') {
+					$optmenu = 'sidebar-user.menu';
 				} else {
 					$optmenu = 'sidebar-guest.menu';
 				}

@@ -8,43 +8,19 @@ use DB;
 use Hash;
 use Illuminate\Support\Carbon;
 
-use App\Model\Klien;
-use App\Model\Karyawan;
-use App\Model\Pengurusanjasa;
-use App\Model\Dokumenklien;
-use App\Model\Tahapanproses;
-use App\Model\Uraianbayar;
-use App\Model\Jenistransaksiperusahaan;
+use App\Model\RefMitra;
+use App\Model\RefStatus;
 
 class ListController extends Controller
 {
 
-    public function listKlien() {
-        return Klien::select('id','nama_lengkap_klien')->where('deleted_status',0)->get();
+    public function listMitra() {
+        return RefMitra::select('id','nama_mitra')->get();
     }
 
-    public function listPengurusanjasa() {
-        return Pengurusanjasa::select('id','nama_pengurusan')->where('status_aktif',1)->get();
+    public function listsubStatus() {
+        return RefStatus::select('id','substatus')->get();
     }
 
-    public function listDokumenklien() {
-        return Dokumenklien::select('id','nama_dokumen_klien')->where('status_aktif',1)->get();
-    }
-
-    public function listTahapanproses() {
-        return Tahapanproses::select('id','nama_tahapan_proses')->where('status_aktif',1)->get();
-    }
-
-    public function listUraianbayar() {
-        return Uraianbayar::select('id','uraian_bayar')->where('status_aktif',1)->get();
-    }
-
-    public function listJenistransaksi() {
-        return Jenistransaksiperusahaan::select('id','nama_transaksi_perusahaan')->where('status_aktif',1)->get();
-    }
-
-    public function listKaryawan() {
-        return Karyawan::select('id','nama_lengkap')->where('deleted_status',0)->get();
-    }
 
 }

@@ -1145,9 +1145,7 @@ function editCellTemplate(cellElement, cellInfo) {
   
   let imageElement = document.createElement("img");
   imageElement.classList.add("uploadedImage");
-  //   if(cellInfo.value !== null) {
       imageElement.setAttribute('src', "upload/" +cellInfo.value);
-// }
       imageElement.setAttribute('height', "50");
       
       cellElement.append(imageElement);

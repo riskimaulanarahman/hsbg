@@ -20,20 +20,15 @@ return [
             'route-name' => 'menu.index'
         ],
         [
-            'icon' => 'fa fa-file',
+            'icon' => 'fa fa-book',
             'title' => 'Master Data',
             'url' => 'javascript:;',
             'caret' => true,
             'sub_menu' => [
                 [
-                    'url' => '/kelola/klien',
-                    'title' => 'Klien',
-                    'route-name' => 'menu.kelola.klien'
-                ],
-                [
-                    'url' => '/dokumen',
-                    'title' => 'Data Pengurusan',
-                    'route-name' => 'menu.dokumen'
+                    'url' => '/project',
+                    'title' => 'Data Project',
+                    'route-name' => 'menu.project'
                 ]]
         ]
     ]

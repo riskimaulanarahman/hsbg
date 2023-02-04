@@ -41,7 +41,7 @@ Route::group(['as' => 'menu.','middleware' => ['auth']], function () {
     // todo : api
     Route::group(['prefix' => 'api'], function () {
 
-            // Route::apiResource('/dokumen', 'DokumenController');
+            Route::apiResource('/project', 'ProjectController');
 
         // referensi
             Route::apiResource('/refstatus', 'referensi\StatusController');
