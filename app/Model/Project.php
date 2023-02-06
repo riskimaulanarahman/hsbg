@@ -11,10 +11,10 @@ class Project extends Model
 
     protected $guarded = ['id']; 
 
-    protected $table = 'Project';
+    protected $table = 'project'; 
 
     // public function createdby()
-    // {
+    // { ii
     //     return $this->belongsTo('App\User','createdby','id');
     // }
 
