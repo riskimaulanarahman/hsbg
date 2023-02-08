@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Model\Projectdetail;
+use DB;
 
 class MainController extends Controller 
 {

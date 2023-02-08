@@ -224,6 +224,14 @@ const popupContentTemplate = function (daftarid,mode) {
                         },
                         // validationRules: [{type: 'required'}],
                     },
+                    {
+                        dataField: 'progress',
+                        label: {text: 'Progress %'},
+                        editorOptions: {
+                            readOnly: true,
+                        },
+                        // validationRules: [{type: 'required'}],
+                    },
                     ],
                 }, 
                 {
@@ -543,7 +551,28 @@ const popupContentTemplate = function (daftarid,mode) {
                                 summary: {
                                     totalItems: [
                                         {
+                                            column: 'tanggal',
+                                            // summaryType: 'sum',
+                                            customizeText(data) {
+                                                return 'Grand Total :'
+                                            },
+                                        },
+                                        {
+                                            column: 'galian_plan',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
                                             column: 'galian_realisasi',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
+                                            column: 'penarikanhdpe_plan',
                                             summaryType: 'sum',
                                             customizeText(data) {
                                                 return data.value
@@ -557,6 +586,13 @@ const popupContentTemplate = function (daftarid,mode) {
                                             },
                                         },
                                         {
+                                            column: 'tiang_plan',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
                                             column: 'tiang_realisasi',
                                             summaryType: 'sum',
                                             customizeText(data) {
@@ -564,7 +600,21 @@ const popupContentTemplate = function (daftarid,mode) {
                                             },
                                         },
                                         {
+                                            column: 'penarikankabel_plan',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
                                             column: 'penarikankabel_realisasi',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
+                                            column: 'hhmh_plan',
                                             summaryType: 'sum',
                                             customizeText(data) {
                                                 return data.value
@@ -585,6 +635,20 @@ const popupContentTemplate = function (daftarid,mode) {
                                             },
                                         },
                                         {
+                                            column: 'otbodp_plan',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
+                                            column: 'terminasi_plan',
+                                            summaryType: 'sum',
+                                            customizeText(data) {
+                                                return data.value
+                                            },
+                                        },
+                                        {
                                             column: 'terminasi_realisasi',
                                             summaryType: 'sum',
                                             customizeText(data) {
@@ -599,6 +663,16 @@ const popupContentTemplate = function (daftarid,mode) {
                                 onContentReady: function(e){
                                     moveEditColumnToLeft(e.component);
                                 },
+                                onCellPrepared: function(e) {
+                                    if(e.rowType=='totalFooter') {
+                                        if(e.column.dataField == 'keterangan') {
+                                            e.cellElement.innerHTML = 'Grand Total'
+                                        }
+                                    }
+                                },
+                                // onUpdated: function(e) {
+                                //     dxFormInstance.option("formData",maindata);
+                                // },
                                 onToolbarPreparing: function(e) {
                                     e.toolbarOptions.items.unshift({						
                                         location: "after",
@@ -643,6 +717,7 @@ const popup = $('#popup').dxPopup({
     showCloseButton: true,
     fullScreen : true,
     onShown: function() {
+        // console.log(maindata)
         dxFormInstance.option("formData",maindata);
         // dxFormInstance.itemOption("id_ref_pengurusan_jasa", "editorOptions", {readOnly:(maindata.id_ref_pengurusan_jasa == null) ? false : true});
         // dxFormInstance.itemOption("id_klien", "editorOptions", {readOnly:(maindata.id_klien == null) ? false : true});
@@ -816,6 +891,10 @@ var dataGrid = $("#dokumen").dxDataGrid({
             caption: "Mitra"
         },
         {
+            dataField: "progress",
+            caption: "Progress (%)"
+        },
+        {
             dataField: "onair",
             caption: "On Air"
         },
@@ -852,7 +931,7 @@ var dataGrid = $("#dokumen").dxDataGrid({
         },{
             location: "after",
             widget: "dxButton",
-            visible: (role == 'admin' || role == 'user') ? true : false,
+            visible: (role == 'admin') ? true : false,
             options: {
                 hint: "Add",
                 icon: "add",

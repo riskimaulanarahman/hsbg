@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Model\Project;
 use App\Model\Projectdetail;
 use App\Model\RefStatus;
+use DB;
 
 class ProjectdetailController extends Controller
 {
@@ -98,6 +100,7 @@ class ProjectdetailController extends Controller
             $fixed = date('Y-m-d', strtotime(substr($date, 0, 10)));
             
             $requestData = $request->all();
+            
             if ($date) {
                 $requestData['tanggal'] = $fixed;
             }
@@ -106,10 +109,32 @@ class ProjectdetailController extends Controller
                 $getstatus = RefStatus::where('substatus', $request->sub_status)->first();
                 $requestData['status'] = $getstatus->status;
             }
-    
+
+            
             $data = Projectdetail::findOrFail($id);
             $data->update($requestData);
 
+            $getplan = Projectdetail::select([
+                DB::raw("SUM(galian_plan)+SUM(penarikanhdpe_plan)+SUM(tiang_plan)+SUM(penarikankabel_plan)+SUM(hhmh_plan)+SUM(otbodp_plan)+SUM(terminasi_plan) as total"),
+            ])
+            ->where('project_id', $data->project_id)
+            ->groupBy('project_id')
+            ->first();
+            $getrealisasi = Projectdetail::select([
+                DB::raw("SUM(galian_realisasi)+SUM(penarikanhdpe_realisasi)+SUM(tiang_realisasi)+SUM(penarikankabel_realisasi)+SUM(hhmh_realisasi)+SUM(otbodp_realisasi)+SUM(terminasi_realisasi) as total"),
+            ])
+            ->where('project_id', $data->project_id)
+            ->groupBy('project_id')
+            ->first();
+            
+            $progress = $getrealisasi->total/$getplan->total*100;
+
+            $project = Project::where('id', $data->project_id);
+            $project->update([
+                'progress' => $progress,
+            ]);
+            
+            
             return response()->json(["status" => "success", "message" => "Berhasil Ubah Data"]);
 
         } catch (\Exception $e){
