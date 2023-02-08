@@ -10,16 +10,29 @@ use Illuminate\Support\Carbon;
 
 use App\Model\RefMitra;
 use App\Model\RefStatus;
+use App\Model\Project;
 
 class ListController extends Controller
 {
 
-    public function listMitra() {
-        return RefMitra::select('id','nama_mitra')->get();
+    public function listMitra() 
+    {
+        return RefMitra::select('id', 'nama_mitra')->get();
     }
 
-    public function listsubStatus() {
-        return RefStatus::select('id','substatus')->get();
+    public function listsubStatus() 
+    {
+        return RefStatus::select('id', 'substatus')->get();
+    }
+
+    public function totalSP() 
+    {
+        return Project::selectRaw('sp')->count();
+    }
+
+    public function totalSPchart() 
+    {
+        return Project::selectRaw('sp,round(avg(progress),1) as jml')->groupBy('sp')->get();
     }
 
 

@@ -32,6 +32,8 @@ Route::post('/upload-berkas', 'BerkasController@update')->name('uploadberkas');
 //list
 Route::post('list-mitra', 'API\ListController@listMitra');
 Route::post('list-substatus', 'API\ListController@listsubStatus');
+Route::get('totalspchart', 'API\ListController@totalSPchart');
+Route::get('totalsp', 'API\ListController@totalSP');
 
 //cetak PDF
 // Route::get('/cetak-kegiatan/{bulan}/{tahun}/{rt}','KegiatanLaporanController@cetakkegiatan')->name('cetak-kegiatan');
