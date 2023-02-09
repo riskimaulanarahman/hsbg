@@ -27,7 +27,7 @@ class ListController extends Controller
 
     public function totalSP() 
     {
-        return Project::selectRaw('sp')->count();
+        return Project::selectRaw('sp')->groupBy('sp')->count();
     }
 
     public function totalSPchart() 
