@@ -101,7 +101,7 @@ console.log(data)
     series: {
       argumentField: 'sp',
       valueField: 'jml',
-      name: 'My oranges',
+      name: 'SP',
       type: 'bar',
       color: '#ffaa66',
     },
