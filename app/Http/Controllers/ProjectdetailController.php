@@ -126,12 +126,29 @@ class ProjectdetailController extends Controller
             ->where('project_id', $data->project_id)
             ->groupBy('project_id')
             ->first();
+
+            if($getrealisasi->total == 0 || $getrealisasi->total == null) {
+                $realisastot = 0;
+            } else {
+                $realisastot = $getrealisasi->total;
+            }
+
+            if($getplan->total == 0 || $getplan->total == null) {
+                $plantot = 0;
+            } else {
+                $plantot = $getplan->total;
+            }
             
-            $progress = $getrealisasi->total/$getplan->total*100;
+            $progress = ($realisastot/$plantot)*100;
+            if ($progress == 0) {
+                $hasil = 0;
+            } else {
+                $hasil = $progress;
+            }
 
             $project = Project::where('id', $data->project_id);
             $project->update([
-                'progress' => $progress,
+                'progress' => $hasil,
             ]);
             
             
