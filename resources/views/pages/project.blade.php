@@ -88,6 +88,7 @@ const loadPanel = $('.loadpanel').dxLoadPanel({
     },
     onHidden() {
     //   showEmployeeInfo(employee);
+        // dataGrid.refresh();
     },
   }).dxLoadPanel('instance');
 
@@ -731,7 +732,10 @@ const popup = $('#popup').dxPopup({
         //     dxFormInstance.itemOption("status_aktif", "editorOptions", {readOnly: true });
         //     dxFormInstance.itemOption("keterangan_daftar_pengurusan", "editorOptions", {readOnly: true });
         // }
-    }
+    },
+    onHidden() {
+        dataGrid.refresh();
+    },
 
 }).dxPopup('instance');
 
