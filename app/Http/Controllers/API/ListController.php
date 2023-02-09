@@ -32,7 +32,8 @@ class ListController extends Controller
 
     public function totalSPchart() 
     {
-        return Project::selectRaw('sp,round(avg(progress),1) as jml')->groupBy('sp')->get();
+        $data = Project::selectRaw('sp,round(avg(progress),1) as jml')->groupBy('sp')->get();
+        return json_encode($data,JSON_NUMERIC_CHECK);
     }
 
 

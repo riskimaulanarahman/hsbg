@@ -92,11 +92,12 @@ $.getJSON(apiurl+'/totalspchart',function(data){
 //   day: 'Sunday',
 //   oranges: 4,
 // }];
+console.log(data)
 
-const dataSource = data;
+// const dataSource = data;
 
 	$('#chart').dxChart({
-    dataSource,
+    dataSource: data,
     series: {
       argumentField: 'sp',
       valueField: 'jml',
