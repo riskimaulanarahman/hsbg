@@ -10,12 +10,11 @@
 
 @section('content')
 	<!-- begin page-header -->
-	{{-- <h1 class="page-header">Selamat Datang, {{ Auth::user()->nama_lengkap }}</h1> --}}
+	<h1 class="page-header">Selamat Datang, {{ Auth::user()->nama_lengkap }}</h1>
 	<!-- end page-header -->
 	
 	<!-- begin row -->
-	<div class="row">
-		<!-- begin col-3 -->
+	{{-- <div class="row">
 		<div class="col-xl-3 col-md-6">
 			<div class="widget widget-stats bg-success">
 				<div class="stats-icon"><i class="fa fa-desktop"></i></div>
@@ -28,14 +27,9 @@
 				</div>
 			</div>
 		</div>
-		<!-- end col-3 -->
 	</div>
-	<!-- end row -->
-	<!-- begin row -->
 	<div class="row">
-		<!-- begin col-8 -->
 		<div class="col-xl-12">
-			<!-- begin panel -->
 			<div class="panel panel-success" data-sortable-id="index-1">
 				<div class="panel-heading">
 					<h4 class="panel-title">SP Analytic Progress</h4>
@@ -50,13 +44,8 @@
 					<div id="chart" class="height-sm"></div>
 				</div>
 			</div>
-			<!-- end panel -->
-			
 		</div>
-		<!-- end col-8 -->
-
-	</div>
-	<!-- end row -->
+	</div> --}}
 @endsection
 
 @push('scripts')

@@ -1,21 +1,19 @@
 @extends('layouts.default')
 
-@section('title', 'Referensi | Pengurusan Jasa')
+@section('title', 'Master | SSH')
 
 @section('content')
 	<!-- begin panel -->
 	<div class="panel panel-info">
 		<div class="panel-heading">
-			<h4 class="panel-title">Referensi - Pengurusan Jasa</h4>
+			<h4 class="panel-title">Master SSH</h4>
 			<div class="panel-heading-btn">
-				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
 				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+				<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 			</div>
 		</div>
 		<div class="panel-body">
-			<div id="ref-pengurusanjasa" style="height: 400px; width:100%;"></div>
+			<div id="masterssh" style="height: 400px; width:100%;"></div>
 		</div>
 	</div>
 	<!-- end panel -->
@@ -28,16 +26,16 @@
 var store = new DevExpress.data.CustomStore({
     key: "id",
     load: function() {
-        return sendRequest(apiurl + "/pengurusanjasa");
+        return sendRequest(apiurl + "/masterssh");
     },
     insert: function(values) {
-        return sendRequest(apiurl + "/pengurusanjasa", "POST", values);
+        return sendRequest(apiurl + "/masterssh", "POST", values);
     },
     update: function(key, values) {
-        return sendRequest(apiurl + "/pengurusanjasa/"+key, "PUT", values);
+        return sendRequest(apiurl + "/masterssh/"+key, "PUT", values);
     },
     remove: function(key) {
-        return sendRequest(apiurl + "/pengurusanjasa/"+key, "DELETE");
+        return sendRequest(apiurl + "/masterssh/"+key, "DELETE");
     },
 });
 
@@ -48,7 +46,7 @@ function moveEditColumnToLeft(dataGrid) {
     });
 }
 // attribute
-var dataGrid = $("#ref-pengurusanjasa").dxDataGrid({    
+var dataGrid = $("#masterssh").dxDataGrid({    
     dataSource: store,
     allowColumnReordering: true,
     allowColumnResizing: true,
@@ -61,17 +59,17 @@ var dataGrid = $("#ref-pengurusanjasa").dxDataGrid({
     headerFilter: { visible: true },
     editing: {
         useIcons:true,
-        mode: "batch",
+        mode: "cell",
         allowAdding: true,
         allowUpdating: true,
-        allowDeleting: false,
+        allowDeleting: true,
     },
     scrolling: {
         mode: "virtual"
     },
     columns: [
         { 
-            dataField: "nama_pengurusan",
+            dataField: "jenis_barang",
             sortOrder: "asc",
             validationRules: [
                 { 
@@ -79,23 +77,36 @@ var dataGrid = $("#ref-pengurusanjasa").dxDataGrid({
                 }
             ]
         },
-		{ 
-			dataField: "keterangan_pengurusan",
+        { 
+            dataField: "spesifikasi",
         },
-		{ 
-			dataField: "status_aktif",
-			dataType: "boolean",
-            encodeHtml: false,
-            customizeText: function (e) {
-                var arrText = ["<span class='btn btn-danger btn-xs'>Tidak Aktif</span>","<span class='btn btn-success btn-xs'>Aktif</span>"];
-                return arrText[e.value];
-            }
-		},
+        { 
+            dataField: "satuan",
+            validationRules: [
+                { 
+                    type: "required" 
+                }
+            ]
+        },
+        { 
+            dataField: "harga",
+            editorType: 'dxNumberBox',
+            format: 'Rp #,##0.##',
+            value: 0,
+            editorOptions: {
+                format: 'Rp #,##0.##',
+            },
+            validationRules: [
+                { 
+                    type: "required" 
+                }
+            ]
+        },
        
     ],
     export: {
         enabled: true,
-        fileName: "referensi-pengurusanjasa",
+        fileName: "master-ssh",
         excelFilterEnabled: true,
         allowExportSelectedData: true
     },

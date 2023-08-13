@@ -20,33 +20,22 @@ return [
             'route-name' => 'menu.index'
         ],
         [
+            'icon' => 'fa fa-file-invoice',
+            'title' => 'Simulasi',
+            'url' => '/simulasi',
+            'route-name' => 'menu.simulasi'
+        ],
+        [
             'icon' => 'fa fa-book',
             'title' => 'Master Data',
             'url' => 'javascript:;',
             'caret' => true,
             'sub_menu' => [
                 [
-                    'url' => '/project',
-                    'title' => 'Data Project',
-                    'route-name' => 'menu.project'
+                    'url' => '/masterssh',
+                    'title' => 'SSH',
+                    'route-name' => 'menu.masterssh'
                 ]]
-        ],[
-            'icon' => 'fa fa-list',
-            'title' => 'Table Referensi',
-            'url' => 'javascript:;',
-            'caret' => true,
-            'sub_menu' => [
-                [
-                    'url' => '/referensi/status',
-                    'title' => 'Status',
-                    'route-name' => 'menu.referensi.status'
-                ],
-                [
-                    'url' => '/referensi/mitra',
-                    'title' => 'Mitra',
-                    'route-name' => 'menu.referensi.mitra'
-                ],
-            ]
         ],
         [
             'icon' => 'fa fa-cog',

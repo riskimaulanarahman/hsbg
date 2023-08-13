@@ -20,16 +20,10 @@ return [
             'route-name' => 'menu.index'
         ],
         [
-            'icon' => 'fa fa-book',
-            'title' => 'Master Data',
-            'url' => 'javascript:;',
-            'caret' => true,
-            'sub_menu' => [
-                [
-                    'url' => '/project',
-                    'title' => 'Data Project',
-                    'route-name' => 'menu.project'
-                ]]
-        ]
+            'icon' => 'fa fa-file-invoice',
+            'title' => 'Simulasi',
+            'url' => '/simulasi',
+            'route-name' => 'menu.simulasi'
+        ],
     ]
 ];

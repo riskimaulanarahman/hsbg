@@ -1,85 +1,36 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Model\Projectdetail;
+use App\Model\Masterssh;
 use DB;
+use Illuminate\Http\Request;
 
 class MainController extends Controller 
 {
 
-    public function refstatus() 
+    public function masterssh() 
     {
-        return view('pages.referensi.status');
+        return view('pages.masterssh');
     }
 
-    public function refmitra() 
+    public function listmasterssh()
     {
-        return view('pages.referensi.mitra');
+        return Masterssh::all();
     }
 
-    public function project() 
+    public function getmasterssh($id) 
     {
-        return view('pages.project');
+        return Masterssh::find($id);
     }
 
-    public function refjenistransaksiperusahaan() 
+    public function simulasi() 
     {
-        return view('pages.referensi.jenistransaksiperusahaan');
-    }
-
-    public function refpengurusanjasa() 
-    {
-        return view('pages.referensi.pengurusanjasa');
-    }
-
-    public function reftahapanproses() 
-    {
-        return view('pages.referensi.tahapanproses');
-    }
-
-    public function refuraianbayar() 
-    {
-        return view('pages.referensi.uraianbayar');
-    }
-
-    public function refkontaklembaga() 
-    {
-        return view('pages.referensi.kontaklembaga');
+        return view('pages.simulasi');
     }
 
     public function kelolauser() 
     {
         return view('pages.kelola.user');
-    }
-
-    public function kelolaklien() 
-    {
-        return view('pages.kelola.klien');
-    }
-
-    public function kelolakaryawan() 
-    {
-        return view('pages.kelola.karyawan');
-    }
-
-    public function dokumen() 
-    {
-        return view('pages.dokumen');
-    }
-
-    public function bantuan() 
-    {
-        return view('pages.bantuan');
-    }
-
-    public function bukutamu() 
-    {
-        return view('pages.bukutamu');
-    }
-
-    public function keuanganperusahaan() 
-    {
-        return view('pages.keuanganperusahaan');
     }
 
 

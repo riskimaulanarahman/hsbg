@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\masterdatasurat\suratmasuk;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\SuratMasuk;
-use Illuminate\Support\Carbon;
-use DateTime;
-use Auth;
 
-class SuratmasukController extends Controller
+use App\Model\Simulasi;
+
+class SimulasiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,17 +16,12 @@ class SuratmasukController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
         try {
-            if($user->role !== 'admin') {
-                $data = SuratMasuk::where('id_users',$user->id)->get();
-            } else {
-                $data = SuratMasuk::all();
-            }
+            $data = Simulasi::all();
 
             return response()->json(['status' => "show", "message" => "Menampilkan Data" , 'data' => $data]);
 
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
 
             return response()->json(["status" => "error", "message" => $e->getMessage()]);
         }
@@ -42,28 +35,14 @@ class SuratmasukController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
-
-        $date = $request->tanggal_surat;
-        $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
-        $date2 = $request->tanggal_terima_surat;
-        $fixed2 = date('Y-m-d', strtotime(substr($date2,0,10)));
-
-        $requestData = $request->all();
-        if($date) {
-            $requestData['tanggal_surat'] = $fixed;
-        }
-        if($date2) {
-            $requestData['tanggal_terima_surat'] = $fixed2;
-        }
-        $requestData['id_users'] = $user->id;
-        
         try {
-            SuratMasuk::create($requestData);
+            $requestData = $request->all();
+
+            Simulasi::create($requestData);
 
             return response()->json(["status" => "success", "message" => "Berhasil Menambahkan Data"]);
 
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
 
             return response()->json(["status" => "error", "message" => $e->getMessage()]);
         }
@@ -75,9 +54,9 @@ class SuratmasukController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('pages/masterdata/masterdatasurat/suratmasuk/suratmasuk');
+        //
     }
 
     /**
@@ -89,26 +68,17 @@ class SuratmasukController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $date = $request->tanggal_surat;
-        $fixed = date('Y-m-d', strtotime(substr($date,0,10)));
-        $date2 = $request->tanggal_terima_surat;
-        $fixed2 = date('Y-m-d', strtotime(substr($date2,0,10)));
-
         $requestData = $request->all();
-        if($date) {
-            $requestData['tanggal_surat'] = $fixed;
-        }
-        if($date2) {
-            $requestData['tanggal_terima_surat'] = $fixed2;
-        }
-        
+        ($request->status_aktif == 'false') ? $requestData['status_aktif'] = 0 : $requestData['status_aktif'] = 1;
         try {
-            $data = SuratMasuk::findOrFail($id);
+    
+            $data = Simulasi::findOrFail($id);
             $data->update($requestData);
+            $data->save();
 
             return response()->json(["status" => "success", "message" => "Berhasil Ubah Data"]);
 
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
 
             return response()->json(["status" => "error", "message" => $e->getMessage()]);
         }
@@ -123,11 +93,11 @@ class SuratmasukController extends Controller
     public function destroy($id)
     {
         try {
-            $data = SuratMasuk::where('id_surat_masuk',$id)->delete();
-
+            $data = Simulasi::findOrFail($id);
+            $data->delete();
             return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
 
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
 
             return response()->json(["status" => "error", "message" => $e->getMessage()]);
         }

@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Model\Bukutamu;
+use App\Model\Masterssh;
 
-class BukuTamuController extends Controller
+class MastersshController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class BukuTamuController extends Controller
     public function index()
     {
         try {
-            $data = Bukutamu::all();
+            $data = Masterssh::all();
 
             return response()->json(['status' => "show", "message" => "Menampilkan Data" , 'data' => $data]);
 
@@ -35,11 +35,10 @@ class BukuTamuController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $requestData = $request->all();
-    
         try {
-            Bukutamu::create($requestData);
+            $requestData = $request->all();
+
+            Masterssh::create($requestData);
 
             return response()->json(["status" => "success", "message" => "Berhasil Menambahkan Data"]);
 
@@ -57,7 +56,7 @@ class BukuTamuController extends Controller
      */
     public function show($id)
     {
-       //..
+        //
     }
 
     /**
@@ -69,12 +68,11 @@ class BukuTamuController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $requestData = $request->all();
-
+        ($request->status_aktif == 'false') ? $requestData['status_aktif'] = 0 : $requestData['status_aktif'] = 1;
         try {
     
-            $data = Bukutamu::findOrFail($id);
+            $data = Masterssh::findOrFail($id);
             $data->update($requestData);
             $data->save();
 
@@ -95,7 +93,7 @@ class BukuTamuController extends Controller
     public function destroy($id)
     {
         try {
-            $data = Bukutamu::findOrFail($id);
+            $data = Masterssh::findOrFail($id);
             $data->delete();
             return response()->json(["status" => "success", "message" => "Berhasil Hapus Data"]);
 

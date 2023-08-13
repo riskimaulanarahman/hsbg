@@ -8,13 +8,13 @@
 		<!-- begin news-feed -->
 		<div class="news-feed">
 			
-			<div class="news-image" style="background-image: url(/assets/img/login-bg/bg-login.jpg)"></div>
+			<div class="news-image" style="background-image: url(/assets/img/login-bg/login-bg-7.jpg)"></div>
 			<div class="col-md-12 text-white">
 				{{-- <h1>title</h1> --}}
 			</div>
 			<div class="news-caption">
-				<h4 class="caption-title"><b>Telkom Indonesia</b><span><img style="max-width:50px; margin-top:-50px;" src="/assets/img/logo/telkom.png" alt=""></span></h4>
-				<p><small>the world in your hand</small></p>
+				<h4 class="caption-title"><span><img style="max-width:50px; margin-top:-50px;" src="/assets/img/logo/sigi.png" alt=""></span><b> HSBG PU SIGI</b></h4>
+				<p><small>KABUPATEN SIGI</small></p>
 			</div>
 		</div>
 		<!-- end news-feed -->
@@ -23,7 +23,7 @@
 			<!-- begin login-header -->
 			<div class="login-header">
 				<div class="brand">
-				    Telkom - REG 6<span><img style="max-width:50px; margin-top:-50px;" src="/assets/img/logo/telkom.png" alt=""></span>
+				    HSBG PU SIGI
 					{{-- SIM Notaris <b> Balikpapan </b> --}}
 				</div>
 				{{-- <div class="icon">
@@ -67,7 +67,7 @@
 			
 					<hr />
 					<p class="text-center text-grey-darker mb-0">
-						<a href="#">Telkom Indonesia</a> &copy; 2023
+						<a href="#">KABUPATEN SIGI</a> &copy; 2023
 					</p>
 				</form>
 			</div>
