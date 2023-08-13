@@ -35,5 +35,11 @@ Route::post('list-substatus', 'API\ListController@listsubStatus');
 Route::get('totalspchart', 'API\ListController@totalSPchart');
 Route::get('totalsp', 'API\ListController@totalSP');
 
+Route::get('/listmastersshhome', 'MainController@listmasterssh');
+Route::apiResource('/simulasihome', 'SimulasiController');
+Route::get('/getmastersshhome/{id}', 'MainController@getmasterssh')->name('getmasterssh');
+
+
+
 //cetak PDF
 // Route::get('/cetak-kegiatan/{bulan}/{tahun}/{rt}','KegiatanLaporanController@cetakkegiatan')->name('cetak-kegiatan');
