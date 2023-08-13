@@ -23,7 +23,7 @@
 			<!-- begin login-header -->
 			<div class="login-header">
 				<div class="brand">
-				    HSBG PU SIGI
+				    HSBG PU SIGI.
 					{{-- SIM Notaris <b> Balikpapan </b> --}}
 				</div>
 				{{-- <div class="icon">
